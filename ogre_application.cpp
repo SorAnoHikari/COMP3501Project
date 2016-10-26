@@ -1,7 +1,7 @@
 #include "ogre_application.h"
 #include "bin/path_config.h"
 
-namespace ogre_application {
+namespace COMP3501_project {
 
 /* Some configuration constants */
 /* They are written here as global variables, but ideally they should be loaded from a configuration file */

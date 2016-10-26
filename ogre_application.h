@@ -13,7 +13,7 @@
 #include "OIS/OIS.h"
 #include "model_loader.h"
 
-namespace ogre_application {
+namespace COMP3501_project {
 
 
     /* A useful type to define */

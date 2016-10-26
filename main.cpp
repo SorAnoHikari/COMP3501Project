@@ -8,7 +8,7 @@
 
 /* Main function that builds and runs the application */
 int main(void){
-    ogre_application::OgreApplication application;
+    COMP3501_project::OgreApplication application;
 
     try {
         application.Init();
