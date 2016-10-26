@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\model_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTexture.material" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9674AE53-8BC9-3699-8F24-9EA7D05F2D74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{4E37A687-CE18-3144-817F-1CEBF5D2588F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

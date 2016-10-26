@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{3FC21163-94D7-368F-A531-A129A8F9609F}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>3501Project</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\bin\Debug\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3501Project.dir\Debug\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3501Project_d</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\bin\Release\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3501Project.dir\Release\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3501Project</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\bin\MinSizeRel\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">3501Project.dir\MinSizeRel\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">3501Project</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+      <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\bin\RelWithDebInfo\</OutDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">3501Project.dir\RelWithDebInfo\</IntDir>
+      <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">3501Project</TargetName>
+      <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.exe</TargetExt>
+      <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+      <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OgreMain_d.lib;OIS_d.lib;OgreOverlay_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib/$(Configuration);C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/Debug/3501Project_d.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/Debug/3501Project_d.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OgreMain.lib;OIS.lib;OgreOverlay.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib/$(Configuration);C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/Release/3501Project.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/Release/3501Project.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat></DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OgreMain.lib;OIS.lib;OgreOverlay.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib/$(Configuration);C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/MinSizeRel/3501Project.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/MinSizeRel/3501Project.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OIS;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\include\OGRE;C:\Users\Tony\Desktop\Univ Docs\COMP 3501\OgreSDK_vc11_v1-9-0\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalOptions> /machine:X86 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;OgreMain.lib;OIS.lib;OgreOverlay.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/lib/$(Configuration);C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib;C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/boost/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/RelWithDebInfo/3501Project.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Tony/Desktop/Univ Docs/COMP 3501/OgreSDK_vc11_v1-9-0/bin/RelWithDebInfo/3501Project.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+      <Version></Version>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h" />
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.cpp"  />
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\main.cpp"  />
+    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\model_loader.cpp"  />
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />
+    <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTexture.material" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
