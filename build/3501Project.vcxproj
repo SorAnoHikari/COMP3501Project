@@ -263,12 +263,19 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationServices.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GameEntity.cpp" />
+    <ClCompile Include="HelicopterModel.cpp" />
+    <ClInclude Include="AnimationServices.h" />
     <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h" />
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.cpp" />
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\main.cpp" />
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\model_loader.cpp" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameEntity.h" />
+    <ClInclude Include="HelicopterModel.h" />
+    <None Include="..\ShinyCylinderTexture.material" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTexture.material" />

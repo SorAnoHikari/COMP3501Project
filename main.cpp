@@ -16,6 +16,8 @@ int main(void){
         Ogre::SceneNode *scene_node = application.CreateEntity("CubeEnt1", "CubeMesh", "ShinyTextureMaterial");
         scene_node->scale(0.3, 0.3, 0.3);
         application.SetupAnimation("CubeEnt1");
+
+		application.InitializeAssets();
         application.MainLoop();
     }
     catch (std::exception &e){

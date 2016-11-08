@@ -12,6 +12,8 @@
 #include "OGRE/OgreEntity.h"
 #include "OIS/OIS.h"
 #include "model_loader.h"
+#include "build/GameEntity.h"
+#include "build/HelicopterModel.h"
 
 namespace COMP3501_project {
 
@@ -49,16 +51,31 @@ namespace COMP3501_project {
             // Keep application active
             void MainLoop(void); 
 
+			void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name);
+			void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material_name);
+
+			void OgreApplication::initializeHelicopter_OgreSceneGraph();
+			void OgreApplication::setHelicopter(Ogre::SceneNode* inHelicopter_[]);
+			void OgreApplication::animateHelicopter(int timer);
+
+			void OgreApplication::InitializeAssets(void);
+
         private:
             // Create root that allows us to access Ogre commands
             std::auto_ptr<Ogre::Root> ogre_root_;
             // Main Ogre window
             Ogre::RenderWindow* ogre_window_;
 
+			HelicopterModel* helicopter_;
+			// When we move it forward, it's just going to move in the x-z plane, so we only need a 2d vec
+			Ogre::Vector3 helicopter_orientation_;
+
             // For animating an object
             Ogre::AnimationState *animation_state_; // Keep state of the animation
             bool animating_; // Whether animation is on or off
             bool space_down_; // Whether space key was pressed
+
+			enum Direction last_dir_;
 
             // Input managers
             OIS::InputManager *input_manager_;
