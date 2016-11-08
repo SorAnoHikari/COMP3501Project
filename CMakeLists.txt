@@ -9,7 +9,7 @@ set(HDRS
 )
  
 set(SRCS
-	./ogre_application.cpp ./main.cpp ./model_loader.cpp ./ShinyTextureMaterialVp.glsl ./ShinyTextureMaterialFp.glsl ShinyTexture.material 
+	./ogre_application.cpp ./main.cpp ./model_loader.cpp ./ShinyTextureMaterialVp.glsl ./ShinyTextureMaterialFp.glsl ShinyTexture.material ./AnimationServices.cpp ./AnimationServices.h ./GameController.cpp ./GameController.h ./HelicopterModel.cpp ./HelicopterModel.h ./GameEntity.h ./GameEntity.cpp
 )
 
 # The rules here are specific to Windows Systems
@@ -22,6 +22,7 @@ if(WIN32)
         "${OGRE_HOME}/include"
         "${OGRE_HOME}/include/OIS"
         "${OGRE_HOME}/include/OGRE"
+		"${OGRE_HOME}/include/OGRE/Terrain"
         "${OGRE_HOME}/boost"
     )
 
@@ -43,12 +44,14 @@ if(WIN32)
 
     # Set up names of Ogre libraries
     target_link_libraries(3501Project 
-	debug "OgreMain_d.lib"
-	debug "OIS_d.lib"
+		debug "OgreMain_d.lib"
+		debug "OIS_d.lib"
         debug "OgreOverlay_d.lib"
+		debug "OgreTerrain_d.lib"
     	optimized "OgreMain.lib"
         optimized "OIS.lib"
         optimized "OgreOverlay.lib"
+		optimized "OgreTerrain.lib"
     )
 
     # Avoid ZERO_CHECK target 
