@@ -3,6 +3,8 @@
 
 #include <exception>
 #include <string>
+#include <Terrain/OgreTerrain.h>
+#include <Terrain/OgreTerrainGroup.h>
 
 #include "OGRE/OgreRoot.h"
 #include "OGRE/OgreRenderSystem.h"
@@ -53,12 +55,10 @@ namespace COMP3501_project {
 
 			void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name);
 			void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material_name);
-
-			void OgreApplication::initializeHelicopter_OgreSceneGraph();
-			void OgreApplication::setHelicopter(Ogre::SceneNode* inHelicopter_[]);
-			void OgreApplication::animateHelicopter(int timer);
+			void OgreApplication::CreateSquare(Ogre::String object_name, Ogre::String material_name);
 
 			void OgreApplication::InitializeAssets(void);
+			void OgreApplication::createScene();
 
         private:
             // Create root that allows us to access Ogre commands
@@ -66,6 +66,7 @@ namespace COMP3501_project {
             // Main Ogre window
             Ogre::RenderWindow* ogre_window_;
 
+			Ogre::SceneNode* floor_;
 			HelicopterModel* helicopter_;
 			// When we move it forward, it's just going to move in the x-z plane, so we only need a 2d vec
 			Ogre::Vector3 helicopter_orientation_;
@@ -81,6 +82,19 @@ namespace COMP3501_project {
             OIS::InputManager *input_manager_;
             OIS::Mouse *mouse_;
             OIS::Keyboard *keyboard_;
+
+			// Terrain related things
+			
+			void OgreApplication::createFrameListener();
+			void OgreApplication::destroyScene();
+
+			void OgreApplication::defineTerrain(long x, long y);
+			void OgreApplication::initBlendMaps(Ogre::Terrain* terrain);
+			void OgreApplication::configureTerrainDefaults(Ogre::Light* light);
+			void OgreApplication::getTerrainImage(bool flipX, bool flipY, Ogre::Image& img);
+			bool mTerrainsImported;
+			Ogre::TerrainGroup* mTerrainGroup;
+			Ogre::TerrainGlobalOptions* mTerrainGlobals;
 
             /* Methods to initialize the application */
             void InitRootNode(void);
