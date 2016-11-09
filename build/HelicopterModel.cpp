@@ -35,6 +35,8 @@ void HelicopterModel::initializeHelicopter_OgreSceneGraph()
 	entity_parts[5]->setScale(Ogre::Vector3(0.1, tail_rotorblade_length, 0.1));
 	entity_parts[5]->setPosition(Ogre::Vector3(-1*(tail_length-0.1 + topBody_length/2), -1.5, 0));
 
+	num_of_parts = 6;
+
 	direction = Ogre::Vector3(1, 0, 0);
 	#pragma endregion 
 }

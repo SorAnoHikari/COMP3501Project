@@ -9,6 +9,7 @@ public:
 	AnimationServices(void);
 	~AnimationServices(void);
 
-	static void MoveEntity(GameEntity entity);
+	static void MoveEntity(GameEntity* entity);
+	static void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotation);
 };
 

@@ -709,20 +709,20 @@ void OgreApplication::MainLoop(void){
 
 void OgreApplication::SetupAnimation(Ogre::String object_name){
 
-    /* Retrieve scene manager and root scene node */
-    Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+    // Set up animation
+	Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
     Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
 
-    /* Set up animation */
     Ogre::Real duration = Ogre::Math::TWO_PI;
-    Ogre::Real num_steps = 36;
-    Ogre::Real step = duration/num_steps;
+    //Ogre::Real num_steps = 36;
+    //Ogre::Real step = duration/num_steps;
     Ogre::Animation* animation = scene_manager->createAnimation("Animation", duration);
     animation->setInterpolationMode(Ogre::Animation::IM_LINEAR);
-    Ogre::Node *object_scene_node = root_scene_node->getChild(object_name);
-    Ogre::NodeAnimationTrack* track = animation->createNodeTrack(0, object_scene_node);
+    //Ogre::Node *object_scene_node = root_scene_node->getChild(object_name);
+    //Ogre::NodeAnimationTrack* track = animation->createNodeTrack(0, object_scene_node);
     
-    /* Set up frames for animation */
+	/*
+    // Set up frames for animation
     Ogre::TransformKeyFrame* key;
     Ogre::Quaternion quat;
     Ogre::Matrix3 rot1, rot2, rot3;
@@ -737,8 +737,11 @@ void OgreApplication::SetupAnimation(Ogre::String object_name){
         key->setRotation(quat);
         key->setScale(Ogre::Vector3(0.3, 0.3, 0.3));
     }
+	*/
 
-    /* Create animation state */
+	// Retrieve scene manager and root scene node
+    
+	/* Create animation state */
     animation_state_ = scene_manager->createAnimationState("Animation");
     animation_state_->setEnabled(true);
     animation_state_->setLoop(true);
@@ -785,23 +788,54 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
     }
 
 	Ogre::Vector3 helicopterDirection = Ogre::Vector3(0, 0, 0);
-	Ogre::Quaternion helicopterOrientation = Ogre::Quaternion();
+	Ogre::Quaternion helicopterOrientation = Ogre::Quaternion(Ogre::Radian(0), Ogre::Vector3(0, 1, 0));
+	
 	/* Helicopter Controls */
 	if (keyboard_->isKeyDown(OIS::KC_UP)) {
-		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetDirection().normalise()/10);
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetDirection().normalisedCopy()/30);
 	}
 	if (keyboard_->isKeyDown(OIS::KC_DOWN)) {
-		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetDirection().normalise()/10);
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetDirection().normalisedCopy()/30);
 	}
 	if (keyboard_->isKeyDown(OIS::KC_LEFT)) {
-		
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetRight().normalisedCopy()/30);
 	}
 	if (keyboard_->isKeyDown(OIS::KC_RIGHT)) {
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetRight().normalisedCopy()/30);
+	}
+	if (keyboard_->isKeyDown(OIS::KC_LCONTROL)) {
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetUp().normalisedCopy()/100);
+	}
+	if (keyboard_->isKeyDown(OIS::KC_LSHIFT)) {
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetUp().normalisedCopy()/100);
+	}
 
+	Ogre::Vector3 oldCameraPos = camera->getPosition();
+	if (keyboard_->isKeyDown(OIS::KC_W)) {
+		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-10), helicopter_->GetRight());
+		AnimationServices::RotateEntity(helicopter_, upRotation);
+	}
+	if (keyboard_->isKeyDown(OIS::KC_S)) {
+		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(10), helicopter_->GetRight());
+		AnimationServices::RotateEntity(helicopter_, downRotation);
+	}
+	if (keyboard_->isKeyDown(OIS::KC_A)) {
+		Ogre::Quaternion leftRotation = Ogre::Quaternion(Ogre::Degree(10), helicopter_->GetUp());
+		AnimationServices::RotateEntity(helicopter_, leftRotation);
+		//camera->setPosition(helicopter_->position);
+		//camera->rotate(helicopter_->GetUp(), Ogre::Degree(10));
+		//camera->setPosition(oldCameraPos);
+	}
+	if (keyboard_->isKeyDown(OIS::KC_D)) {
+		Ogre::Quaternion rightRotation = Ogre::Quaternion(Ogre::Degree(-10), helicopter_->GetUp());
+		AnimationServices::RotateEntity(helicopter_, rightRotation);
+		//camera->setPosition(helicopter_->position);
+		//camera->rotate(helicopter_->GetUp(), Ogre::Degree(-10));
+		//camera->setPosition(oldCameraPos);
 	}
 
 	// TODO: Eventually make this loop through all GameEntities and call this method.
-	AnimationServices::MoveEntity(*helicopter_);
+	AnimationServices::MoveEntity(helicopter_);
 
 	camera->move(helicopter_->GetCurrentMovement());
 
