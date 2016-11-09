@@ -9,7 +9,6 @@ vertex_program shiny_texture_shader/vs glsl
         param_named_auto projection_mat projection_matrix
 		param_named_auto normal_mat inverse_transpose_worldview_matrix
 		param_named light_position float3 -10.5 -10.5 11.5
-		param_named light_position2 float3 10.5 10.5 -11.5
     }
 }
 
