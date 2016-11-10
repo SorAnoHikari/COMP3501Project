@@ -16,6 +16,7 @@
     <ClCompile Include="AnimationServices.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="HelicopterModel.cpp" />
+    <ClCompile Include="MissileModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h">
@@ -27,6 +28,7 @@
     <ClInclude Include="AnimationServices.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="HelicopterModel.h" />
+    <ClInclude Include="MissileModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />

@@ -12,11 +12,11 @@ public:
 	void GameEntity::SetOrientation(Ogre::Quaternion inOrientation);
 	Ogre::SceneNode** GameEntity::GetParts(void);
 
-	void GameEntity::SetDirection(Ogre::Vector3 inVector);
+	void GameEntity::SetForward(Ogre::Vector3 inVector);
 	void GameEntity::SetRight(Ogre::Vector3 inVector);
 	void GameEntity::SetUp(Ogre::Vector3 inVector);
 
-	Ogre::Vector3 GameEntity::GetDirection(void);
+	Ogre::Vector3 GameEntity::GetForward(void);
 	Ogre::Vector3 GameEntity::GetRight(void);
 	Ogre::Vector3 GameEntity::GetUp(void);
 
@@ -32,9 +32,9 @@ protected:
 	Ogre::SceneNode** entity_parts;
 	Ogre::Vector3 currentMovement;
 
-	Ogre::Vector3 direction;
-	Ogre::Vector3 right;
-	Ogre::Vector3 up;
+	Ogre::Vector3 forwardDirection;
+	Ogre::Vector3 rightDirection;
+	Ogre::Vector3 upDirection;
 	Ogre::Quaternion orientation;
 	int num_of_parts;
 };

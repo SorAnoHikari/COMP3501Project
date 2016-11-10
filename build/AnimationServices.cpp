@@ -20,7 +20,7 @@ void AnimationServices::MoveEntity(GameEntity* entity)
 
 void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotation)
 {
-	entity->SetDirection(rotation * entity->GetDirection());
+	entity->SetForward(rotation * entity->GetForward());
 	entity->SetRight(rotation * entity->GetRight());
 	entity->SetUp(rotation * entity->GetUp());
 	entity->GetParts()[0]->rotate(rotation, Ogre::Node::TS_PARENT);

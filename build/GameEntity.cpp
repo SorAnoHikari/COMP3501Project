@@ -3,9 +3,9 @@
 
 GameEntity::GameEntity(void)
 {
-	direction = Ogre::Vector3(1, 0, 0);
-	right = Ogre::Vector3(0, 0, 1);
-	up = Ogre::Vector3(0, 1, 0);
+	forwardDirection = Ogre::Vector3(1, 0, 0);
+	rightDirection = Ogre::Vector3(0, 0, 1);
+	upDirection = Ogre::Vector3(0, 1, 0);
 	position = Ogre::Vector3(0, 0, 0);
 	currentMovement = Ogre::Vector3(0, 0, 0);
 	num_of_parts = 0;
@@ -25,19 +25,19 @@ Ogre::SceneNode** GameEntity::GetParts(void)
 	return entity_parts;
 }
 
-Ogre::Vector3 GameEntity::GetDirection(void)
+Ogre::Vector3 GameEntity::GetForward(void)
 {
-	return direction;
+	return forwardDirection;
 }
 
 Ogre::Vector3 GameEntity::GetRight(void)
 {
-	return right;
+	return rightDirection;
 }
 
 Ogre::Vector3 GameEntity::GetUp(void)
 {
-	return up;
+	return upDirection;
 }
 
 Ogre::Vector3 GameEntity::GetCurrentMovement(void)
@@ -65,17 +65,17 @@ int GameEntity::GetNumOfParts(void)
 	return num_of_parts;
 }
 
-void GameEntity::SetDirection(Ogre::Vector3 inVector)
+void GameEntity::SetForward(Ogre::Vector3 inVector)
 {
-	direction = inVector;
+	forwardDirection = inVector;
 }
 
 void GameEntity::SetRight(Ogre::Vector3 inVector)
 {
-	right = inVector;
+	rightDirection = inVector;
 }
 
 void GameEntity::SetUp(Ogre::Vector3 inVector)
 {
-	up = inVector;
+	upDirection = inVector;
 }

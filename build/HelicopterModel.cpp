@@ -36,7 +36,7 @@ void HelicopterModel::initializeHelicopter_OgreSceneGraph()
 	entity_parts[5]->setScale(Ogre::Vector3(0.1, tail_rotorblade_length, 0.1));
 	entity_parts[5]->setPosition(Ogre::Vector3(-1*(tail_length-0.1 + topBody_length/2), -1.5, 0));
 
-	direction = Ogre::Vector3(1, 0, 0);
+	forwardDirection = Ogre::Vector3(1, 0, 0);
 	num_of_parts = 7;
 	#pragma endregion 
 }
@@ -50,4 +50,35 @@ void HelicopterModel::animateHelicopter(int timer)
 Ogre::Vector3 HelicopterModel::GetThirdPersonCameraPosition(void)
 {
 	return entity_parts[6]->_getDerivedPosition();
+}
+
+MissileModel* HelicopterModel::GetMissile(void)
+{
+	return missile;
+}
+void HelicopterModel::SetMissile(MissileModel* inMissile)
+{
+	missile = inMissile;
+}
+
+void HelicopterModel::FireMissile(void)
+{
+	missile->position = position;
+	missile->GetParts()[0]->setPosition(position);
+	missile->GetParts()[0]->setVisible(true);
+	missile->SetForward(forwardDirection);
+	missile->SetCurrentMovement(forwardDirection*2);
+	missile->isActive = true;
+}
+
+void HelicopterModel::DeactivateMissile(void)
+{
+	missile->GetParts()[0]->setVisible(false);
+	missile->SetCurrentMovement(Ogre::Vector3(0, 0, 0));
+	missile->isActive = false;
+}
+
+bool HelicopterModel::IsMissileActive(void)
+{
+	return missile->isActive;
 }

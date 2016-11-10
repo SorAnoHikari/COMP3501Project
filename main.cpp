@@ -12,10 +12,6 @@ int main(void){
 
     try {
         application.Init();
-        application.LoadModel("desert.obj", "desert");
-        Ogre::SceneNode *scene_node = application.CreateEntity("terrain", "desert", "TerrainMaterial");
-		scene_node->setScale(11, 11, 11);
-		scene_node->setPosition(10, -20, -5);
 		application.SetupAnimation("CubeEnt1");
 
 		application.InitializeAssets();

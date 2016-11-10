@@ -267,6 +267,7 @@
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="HelicopterModel.cpp" />
+    <ClCompile Include="MissileModel.cpp" />
     <ClInclude Include="AnimationServices.h" />
     <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h" />
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="HelicopterModel.h" />
+    <ClInclude Include="MissileModel.h" />
     <None Include="..\ShinyCylinderTexture.material" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />

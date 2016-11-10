@@ -70,3 +70,24 @@ material TerrainMaterial
         } 
     }
 }
+
+material MissileMaterial 
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref shiny_texture_shader/vs
+            {
+            }
+
+            fragment_program_ref shiny_texture_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture missile.png 2d
+			}
+        } 
+    }
+}

@@ -27,7 +27,7 @@ float viewport_top_g = (1.0f - viewport_height_g) * 0.5f;
 unsigned short viewport_z_order_g = 100;
 const Ogre::ColourValue viewport_background_color_g(0.0, 0.0, 0.0);
 float camera_near_clip_distance_g = 0.01;
-float camera_far_clip_distance_g = 100.0;
+float camera_far_clip_distance_g = 500.0;
 Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 
@@ -63,6 +63,11 @@ void OgreApplication::Init(void){
     InitEvents();
     InitOIS();
     LoadMaterials();
+
+	LoadModel("desert.obj", "desert");
+	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
+	floor_->setScale(100, 100, 100);
+	floor_->setPosition(10, -20, -5);
 }
 
 
@@ -723,26 +728,6 @@ void OgreApplication::SetupAnimation(Ogre::String object_name){
     //Ogre::Real step = duration/num_steps;
     Ogre::Animation* animation = scene_manager->createAnimation("Animation", duration);
     animation->setInterpolationMode(Ogre::Animation::IM_LINEAR);
-    //Ogre::Node *object_scene_node = root_scene_node->getChild(object_name);
-    //Ogre::NodeAnimationTrack* track = animation->createNodeTrack(0, object_scene_node);
-    
-	/*
-    // Set up frames for animation
-    Ogre::TransformKeyFrame* key;
-    Ogre::Quaternion quat;
-    Ogre::Matrix3 rot1, rot2, rot3;
-    rot1 = Ogre::Matrix3::IDENTITY;
-    for (int i = 0; i < num_steps; i++){
-        Ogre::Real current = ((float) i) * step;
-        key = track->createNodeKeyFrame(current);
-        rot1.FromAngleAxis(Ogre::Vector3(1, 0, 0), Ogre::Degree(-90));
-        rot2.FromAngleAxis(Ogre::Vector3(0, 1, 0), Ogre::Radian(-current));
-        rot3 = rot2 * rot1;
-        quat.FromRotationMatrix(rot3);
-        key->setRotation(quat);
-        key->setScale(Ogre::Vector3(0.3, 0.3, 0.3));
-    }
-	*/
 
 	// Retrieve scene manager and root scene node
     
@@ -795,7 +780,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_C)) {
 		if (isInThirdPerson)
 		{
-			camera->setPosition(helicopter_->position + helicopter_->GetDirection() * 8 - helicopter_->GetUp());
+			camera->setPosition(helicopter_->position + helicopter_->GetForward() * 8 - helicopter_->GetUp());
 			isInThirdPerson = false;
 		}
 		else
@@ -807,10 +792,10 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	/* Helicopter Controls */
 	if (keyboard_->isKeyDown(OIS::KC_UP)) {
-		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetDirection().normalisedCopy()/30);
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetForward().normalisedCopy()/30);
 	}
 	if (keyboard_->isKeyDown(OIS::KC_DOWN)) {
-		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetDirection().normalisedCopy()/30);
+		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetForward().normalisedCopy()/30);
 	}
 	if (keyboard_->isKeyDown(OIS::KC_LEFT)) {
 		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetRight().normalisedCopy()/30);
@@ -827,18 +812,18 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	Ogre::Vector3 oldCameraPos = camera->getPosition();
 	if (keyboard_->isKeyDown(OIS::KC_W)) {
-		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-5), helicopter_->GetRight());
+		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-1), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, upRotation);
 
-		camera->rotate(helicopter_->GetRight(), Ogre::Degree(-5));
+		camera->rotate(helicopter_->GetRight(), Ogre::Degree(-1));
 		if (isInThirdPerson)
 			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
 	if (keyboard_->isKeyDown(OIS::KC_S)) {
-		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(5), helicopter_->GetRight());
+		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(1), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, downRotation);
 
-		camera->rotate(helicopter_->GetRight(), Ogre::Degree(5));
+		camera->rotate(helicopter_->GetRight(), Ogre::Degree(1));
 		if (isInThirdPerson)
 			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
@@ -859,8 +844,18 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
 
-	// TODO: Eventually make this loop through all GameEntities and call this method.
+	if (keyboard_->isKeyDown(OIS::KC_Z) && !helicopter_->IsMissileActive()) {
+		helicopter_->FireMissile();
+	}
+
+	// Animate the helicopter after changing its variables
 	AnimationServices::MoveEntity(helicopter_);
+	if (helicopter_->IsMissileActive())
+	{
+		AnimationServices::MoveEntity(helicopter_->GetMissile());
+		if (helicopter_->GetMissile()->position.distance(helicopter_->position) > 100)
+			helicopter_->DeactivateMissile();
+	}
 
 	camera->move(helicopter_->GetCurrentMovement());
 
@@ -899,7 +894,6 @@ void OgreApplication::InitializeAssets(void)
 
 	CreateCylinder("Cylinder", 1, "ShinyCylinderTextureMaterial");
 	CreateCube("Cube", "ShinyTextureMaterial");
-	CreateSquare("Square", "EarthTextureMaterial");
     // Create the parts
     newHelicopter[0] = CreateEntity("CylinderInstance1", "Cylinder", "ShinyCylinderTextureMaterial");
 	newHelicopter[1] = CreateEntity("MainRotorblade", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
@@ -914,5 +908,14 @@ void OgreApplication::InitializeAssets(void)
 	helicopter_->SetParts(newHelicopter);
 	helicopter_->initializeHelicopter_OgreSceneGraph();
 	#pragma endregion
+
+	MissileModel* heliMissile = new MissileModel();
+	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[1];
+
+	//LoadModel("missile.obj", "missile");
+	missileModel[0] = CreateEntity("helicopter_missile", "Cube", "MissileMaterial");
+	missileModel[0]->setVisible(false);
+	heliMissile->SetParts(missileModel);
+	helicopter_->SetMissile(heliMissile);
 }
 } // namespace ogre_application;
