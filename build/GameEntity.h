@@ -7,6 +7,8 @@ public:
 	GameEntity(void);
 	~GameEntity(void);
 
+	void GameEntity::ToggleVisibility(bool isVisible);
+
 	void GameEntity::SetParts(Ogre::SceneNode** inParts);
 	void GameEntity::SetCurrentMovement(Ogre::Vector3 inVector);
 	void GameEntity::SetOrientation(Ogre::Quaternion inOrientation);
@@ -24,10 +26,15 @@ public:
 	Ogre::Vector3 GameEntity::GetCurrentMovement(void);
 
 	int GameEntity::GetNumOfParts(void);
+	void GameEntity::SetNumOfParts(int inNum);
+
+	int GameEntity::GetRadius(void);
+	void GameEntity::SetRadius(int inRadius);
 
 	// for now, make set/getters later
 	Ogre::Vector3 position;
 	int max_speed;
+	
 protected:
 	Ogre::SceneNode** entity_parts;
 	Ogre::Vector3 currentMovement;
@@ -37,5 +44,6 @@ protected:
 	Ogre::Vector3 upDirection;
 	Ogre::Quaternion orientation;
 	int num_of_parts;
+	int radius;
 };
 

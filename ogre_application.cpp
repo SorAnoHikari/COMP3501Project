@@ -54,6 +54,9 @@ void OgreApplication::Init(void){
 	camera_thirdperson_offset = Ogre::Vector3(-30, 20.5, 0);
 	isInThirdPerson = true;
 
+	NUMBER_OF_ENEMIES = 30;
+	enemies_ = new GameEntity*[NUMBER_OF_ENEMIES];
+
     /* Run all initialization steps */
     InitRootNode();
     InitPlugins();
@@ -848,6 +851,11 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (helicopter_->IsMissileActive())
 	{
 		AnimationServices::MoveEntity(helicopter_->GetMissile());
+		GameEntity* collidedObject = AnimationServices::DetectMissileCollision(helicopter_->GetMissile(), enemies_);
+		if (collidedObject != nullptr)
+		{
+			collidedObject->ToggleVisibility(false);
+		}
 		if (helicopter_->GetMissile()->position.distance(helicopter_->position) > 100)
 			helicopter_->DeactivateMissile();
 	}
@@ -912,6 +920,27 @@ void OgreApplication::InitializeAssets(void)
 	missileModel[0]->setVisible(false);
 	heliMissile->SetParts(missileModel);
 	helicopter_->SetMissile(heliMissile);
+
+	#pragma region enemies
+	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
+	{
+		Ogre::String entity_name, prefix("Enemy_");;
+		entity_name = prefix + Ogre::StringConverter::toString(i);
+		Ogre::SceneNode** enemyParts = new Ogre::SceneNode*[1];
+
+		Ogre::Vector3 enemy_position = Ogre::Vector3(-300.0 + rand() / 300, -10 + rand() / 10, -300.0 + rand() / 300);
+
+		enemyParts[0] = CreateEntity(entity_name, "Cube", "ShinyTextureMaterial");
+		enemyParts[0]->setPosition(enemy_position);
+		enemyParts[0]->scale(10, 10, 10);
+		enemies_[i] = new GameEntity();
+		enemies_[i]->position = enemy_position;
+		enemies_[i]->SetRadius(7);
+		enemies_[i]->SetNumOfParts(1);
+		enemies_[i]->SetParts(enemyParts);
+		
+	}
+	#pragma endregion
 }
 
 void OgreApplication::LoadTerrain(void) {
@@ -925,7 +954,7 @@ void OgreApplication::LoadTerrain(void) {
 	Ogre::SceneNode *building_top = CreateEntity("top", "top", "TopMaterial", building);
 	Ogre::SceneNode *helipad = CreateEntity("helipad", "helipad", "HelipadMaterial", building);
 
-	floor_->setScale(11, 11, 11);
+	floor_->setScale(111, 111, 111);
 	floor_->setPosition(10, -20, -5);
 
 	/*

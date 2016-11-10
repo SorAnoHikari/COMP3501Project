@@ -1,5 +1,6 @@
 #include "AnimationServices.h"
 #include "GameEntity.h"
+#include "../ogre_application.h"
 
 
 AnimationServices::AnimationServices(void)
@@ -24,4 +25,15 @@ void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotati
 	entity->SetRight(rotation * entity->GetRight());
 	entity->SetUp(rotation * entity->GetUp());
 	entity->GetParts()[0]->rotate(rotation, Ogre::Node::TS_PARENT);
+}
+
+GameEntity* AnimationServices::DetectMissileCollision(MissileModel* missile, GameEntity** objects)
+{
+	for (int i = 0; i < 30; i++)
+	{
+		if (missile->position.distance(objects[i]->position) <= missile->GetRadius() + objects[i]->GetRadius()) {
+			return objects[i];
+		}
+	}
+	return nullptr;
 }

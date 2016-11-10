@@ -15,6 +15,14 @@ GameEntity::~GameEntity(void)
 {
 }
 
+void GameEntity::ToggleVisibility(bool isVisible)
+{
+	for (int i = 0; i < num_of_parts; i++)
+	{
+		entity_parts[i]->setVisible(isVisible);
+	}
+}
+
 void GameEntity::SetParts(Ogre::SceneNode** inParts)
 {
 	entity_parts = inParts;
@@ -65,6 +73,11 @@ int GameEntity::GetNumOfParts(void)
 	return num_of_parts;
 }
 
+void GameEntity::SetNumOfParts(int inNum)
+{
+	num_of_parts = inNum;
+}
+
 void GameEntity::SetForward(Ogre::Vector3 inVector)
 {
 	forwardDirection = inVector;
@@ -78,4 +91,14 @@ void GameEntity::SetRight(Ogre::Vector3 inVector)
 void GameEntity::SetUp(Ogre::Vector3 inVector)
 {
 	upDirection = inVector;
+}
+
+int GameEntity::GetRadius(void)
+{
+	return radius;
+}
+
+void GameEntity::SetRadius(int inRadius)
+{
+	radius = inRadius;
 }

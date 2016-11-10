@@ -1,6 +1,7 @@
 #pragma once
 #include <OgreSceneNode.h>
 
+class MissileModel;
 class GameEntity;
 
 class AnimationServices
@@ -19,5 +20,6 @@ public:
 
 	static void MoveEntity(GameEntity* entity);
 	static void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotation);
+	static GameEntity* AnimationServices::DetectMissileCollision(MissileModel* missile, GameEntity** objects);
 };
 

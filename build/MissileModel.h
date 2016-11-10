@@ -8,8 +8,6 @@ public:
 	~MissileModel(void);
 
 	bool isActive;
-
 private:
-	int radius;
 };
 

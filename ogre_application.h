@@ -62,6 +62,8 @@ namespace COMP3501_project {
 
 			void OgreApplication::LoadTerrain(void);
 
+			int NUMBER_OF_ENEMIES;
+
         private:
             // Create root that allows us to access Ogre commands
             std::auto_ptr<Ogre::Root> ogre_root_;
@@ -70,6 +72,7 @@ namespace COMP3501_project {
 
 			Ogre::SceneNode* floor_;
 			HelicopterModel* helicopter_;
+			GameEntity** enemies_;
 			// When we move it forward, it's just going to move in the x-z plane, so we only need a 2d vec
 			Ogre::Vector3 helicopter_orientation_;
 

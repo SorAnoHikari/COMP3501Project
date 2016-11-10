@@ -10,9 +10,6 @@
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\model_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationServices.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="HelicopterModel.cpp" />
@@ -20,9 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AnimationServices.h" />
