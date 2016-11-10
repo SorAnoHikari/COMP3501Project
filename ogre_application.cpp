@@ -63,11 +63,6 @@ void OgreApplication::Init(void){
     InitEvents();
     InitOIS();
     LoadMaterials();
-
-	LoadModel("desert.obj", "desert");
-	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
-	floor_->setScale(100, 100, 100);
-	floor_->setPosition(10, -20, -5);
 }
 
 
@@ -917,5 +912,31 @@ void OgreApplication::InitializeAssets(void)
 	missileModel[0]->setVisible(false);
 	heliMissile->SetParts(missileModel);
 	helicopter_->SetMissile(heliMissile);
+}
+
+void OgreApplication::LoadTerrain(void) {
+	LoadModel("desert.obj", "desert");
+	LoadModel("building.obj", "building");
+	LoadModel("top.obj", "top");
+	LoadModel("helipad.obj", "helipad");
+
+	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
+	Ogre::SceneNode *building = CreateEntity("building", "building", "BuildingMaterial", floor_);
+	Ogre::SceneNode *building_top = CreateEntity("top", "top", "TopMaterial", building);
+	Ogre::SceneNode *helipad = CreateEntity("helipad", "helipad", "HelipadMaterial", building);
+
+	floor_->setScale(11, 11, 11);
+	floor_->setPosition(10, -20, -5);
+
+	/*
+	LoadModel("desert.obj", "desert");
+	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
+	floor_->setScale(100, 100, 100);
+	floor_->setPosition(10, -20, -5);
+	*/
+
+	building->setInheritScale(false);
+	building->setScale(6, 6, 6);
+	building->translate(0, 0.15, 0);
 }
 } // namespace ogre_application;

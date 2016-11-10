@@ -12,6 +12,7 @@ int main(void){
 
     try {
         application.Init();
+		application.LoadTerrain();
 		application.SetupAnimation("CubeEnt1");
 
 		application.InitializeAssets();
