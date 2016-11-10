@@ -50,27 +50,6 @@ material ShinyTextureMaterial
     }
 }
 
-material MissileMaterial
-{
-    technique
-    {
-        pass
-        {
-            vertex_program_ref shiny_texture_shader/vs
-            {
-            }
-
-            fragment_program_ref shiny_texture_shader/fs
-            {
-            }
-
-			texture_unit {
-				texture missile.png 2d
-			}
-        } 
-    }
-}
-
 material TerrainMaterial
 {
     technique
@@ -150,6 +129,27 @@ material HelipadMaterial
 
 			texture_unit {
 				texture helipad.jpg 2d
+			}
+        } 
+    }
+}
+
+material SkyMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref shiny_texture_shader/vs
+            {
+            }
+
+            fragment_program_ref shiny_texture_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture sky.png 2d
 			}
         } 
     }

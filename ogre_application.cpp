@@ -27,7 +27,7 @@ float viewport_top_g = (1.0f - viewport_height_g) * 0.5f;
 unsigned short viewport_z_order_g = 100;
 const Ogre::ColourValue viewport_background_color_g(0.0, 0.0, 0.0);
 float camera_near_clip_distance_g = 0.01;
-float camera_far_clip_distance_g = 500.0;
+float camera_far_clip_distance_g = 2400.0;
 Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 
@@ -956,14 +956,20 @@ void OgreApplication::LoadTerrain(void) {
 	LoadModel("building.obj", "building");
 	LoadModel("top.obj", "top");
 	LoadModel("helipad.obj", "helipad");
+	LoadModel("sky.obj", "sky");
 
-	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
+	Ogre::SceneNode *sky = CreateEntity("sky", "sky", "SkyMaterial");
+	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial", sky);
 	Ogre::SceneNode *building = CreateEntity("building", "building", "BuildingMaterial", floor_);
 	Ogre::SceneNode *building_top = CreateEntity("top", "top", "TopMaterial", building);
 	Ogre::SceneNode *helipad = CreateEntity("helipad", "helipad", "HelipadMaterial", building);
 
-	floor_->setScale(111, 111, 111);
-	floor_->setPosition(10, -20, -5);
+	sky->setScale(111, 111, 111);
+	sky->translate(10, -20, -5);
+	//for some reason, the texture is inverted
+	sky->pitch(Ogre::Angle(180));
+
+	floor_->setInheritOrientation(false);
 
 	/*
 	LoadModel("desert.obj", "desert");
@@ -973,7 +979,7 @@ void OgreApplication::LoadTerrain(void) {
 	*/
 
 	building->setInheritScale(false);
-	building->setScale(6, 6, 6);
+	building->setScale(50, 50, 50);
 	building->translate(0, 0.15, 0);
 }
 } // namespace ogre_application;
