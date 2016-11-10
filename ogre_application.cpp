@@ -795,6 +795,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_DOWN)) {
 		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetForward().normalisedCopy()/30);
 	}
+	// TODO: Rotate the helicopter on its forward vector when we move left/right
 	if (keyboard_->isKeyDown(OIS::KC_LEFT)) {
 		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() - helicopter_->GetRight().normalisedCopy()/30);
 	}
@@ -808,7 +809,6 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetUp().normalisedCopy()/100);
 	}
 
-	Ogre::Vector3 oldCameraPos = camera->getPosition();
 	if (keyboard_->isKeyDown(OIS::KC_W)) {
 		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-1), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, upRotation);
@@ -848,6 +848,8 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	// Animate the helicopter after changing its variables
 	AnimationServices::MoveEntity(helicopter_);
+
+	// Check if any projectiles have come in contact with enemies
 	if (helicopter_->IsMissileActive())
 	{
 		AnimationServices::MoveEntity(helicopter_->GetMissile());
@@ -856,10 +858,12 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		{
 			collidedObject->ToggleVisibility(false);
 		}
+		// If the missile is too far away, deactivate it
 		if (helicopter_->GetMissile()->position.distance(helicopter_->position) > 100)
 			helicopter_->DeactivateMissile();
 	}
 
+	// Displace the camera along with the helicopter
 	camera->move(helicopter_->GetCurrentMovement());
 
     return true;
@@ -889,6 +893,9 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
     ogre_window_->update();
 }
 
+/*
+ *	Method to load all models
+ */
 void OgreApplication::InitializeAssets(void)
 {
 	#pragma region helicopter
@@ -930,6 +937,7 @@ void OgreApplication::InitializeAssets(void)
 
 		Ogre::Vector3 enemy_position = Ogre::Vector3(-300.0 + rand() / 300, -10 + rand() / 10, -300.0 + rand() / 300);
 
+		// TODO: For now i'm just using cubes for the meshes, load actual tanks and whatnot for later.
 		enemyParts[0] = CreateEntity(entity_name, "Cube", "ShinyTextureMaterial");
 		enemyParts[0]->setPosition(enemy_position);
 		enemyParts[0]->scale(10, 10, 10);

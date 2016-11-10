@@ -27,6 +27,10 @@ void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotati
 	entity->GetParts()[0]->rotate(rotation, Ogre::Node::TS_PARENT);
 }
 
+/*
+ *	Basic sphere-sphere collision detection for missiles 
+ *	Maybe implement box collision for better effect later.
+ */
 GameEntity* AnimationServices::DetectMissileCollision(MissileModel* missile, GameEntity** objects)
 {
 	for (int i = 0; i < 30; i++)
