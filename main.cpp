@@ -19,8 +19,6 @@ int main(void){
 		application.SetupAnimation("CubeEnt1");
 
 		application.InitializeAssets();
-		// TODO: Fix terrain loading, currently not showing up
-		//application.createScene();
         application.MainLoop();
     }
     catch (std::exception &e){

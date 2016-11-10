@@ -28,7 +28,6 @@ unsigned short viewport_z_order_g = 100;
 const Ogre::ColourValue viewport_background_color_g(0.0, 0.0, 0.0);
 float camera_near_clip_distance_g = 0.01;
 float camera_far_clip_distance_g = 100.0;
-Ogre::Vector3 camera_position_g(-30, 20.5, 0);
 Ogre::Vector3 camera_look_at_g(0.0, 0.0, 0.0);
 Ogre::Vector3 camera_up_g(0.0, 1.0, 0.0);
 
@@ -51,6 +50,9 @@ void OgreApplication::Init(void){
     input_manager_ = NULL;
     keyboard_ = NULL;
     mouse_ = NULL;
+
+	camera_thirdperson_offset = Ogre::Vector3(-30, 20.5, 0);
+	isInThirdPerson = true;
 
     /* Run all initialization steps */
     InitRootNode();
@@ -174,7 +176,7 @@ void OgreApplication::InitViewport(void){
         camera->setNearClipDistance(camera_near_clip_distance_g);
         camera->setFarClipDistance(camera_far_clip_distance_g); 
 
-        camera->setPosition(camera_position_g);
+        camera->setPosition(camera_thirdperson_offset);
         camera->lookAt(camera_look_at_g);
         camera->setFixedYawAxis(true, camera_up_g);
 
@@ -648,7 +650,7 @@ void OgreApplication::LoadModel(const char *filename, const char *mesh_name){
 }
 
 
-Ogre::SceneNode *OgreApplication::CreateEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name){
+Ogre::SceneNode *OgreApplication::CreateEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name, Ogre::SceneNode* parent_node){
 
     try {
         /* Create one instance or entity for 'object_name' */
@@ -656,7 +658,10 @@ Ogre::SceneNode *OgreApplication::CreateEntity(Ogre::String entity_name, Ogre::S
 
         /* Retrieve scene manager and root scene node */
         Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+        if (parent_node == nullptr)
+        {
+	        parent_node = scene_manager->getRootSceneNode();
+        }
 
         /* Create entity */
         Ogre::Entity* entity = scene_manager->createEntity(object_name);
@@ -666,7 +671,7 @@ Ogre::SceneNode *OgreApplication::CreateEntity(Ogre::String entity_name, Ogre::S
 
         /* Create a scene node for the entity */
         /* The scene node keeps track of the entity's position and orientation */
-        Ogre::SceneNode* scene_node = root_scene_node->createChildSceneNode(entity_name);
+        Ogre::SceneNode* scene_node = parent_node->createChildSceneNode(entity_name);
         scene_node->attachObject(entity);
 
         return scene_node;
@@ -786,10 +791,20 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
         ogre_window_->destroy();
         return false;
     }
-
-	Ogre::Vector3 helicopterDirection = Ogre::Vector3(0, 0, 0);
-	Ogre::Quaternion helicopterOrientation = Ogre::Quaternion(Ogre::Radian(0), Ogre::Vector3(0, 1, 0));
 	
+	if (keyboard_->isKeyDown(OIS::KC_C)) {
+		if (isInThirdPerson)
+		{
+			camera->setPosition(helicopter_->position + helicopter_->GetDirection() * 8 - helicopter_->GetUp());
+			isInThirdPerson = false;
+		}
+		else
+		{
+			camera->setPosition(helicopter_->position + camera_thirdperson_offset);
+			isInThirdPerson = true;
+		}
+	}
+
 	/* Helicopter Controls */
 	if (keyboard_->isKeyDown(OIS::KC_UP)) {
 		helicopter_->SetCurrentMovement(helicopter_->GetCurrentMovement() + helicopter_->GetDirection().normalisedCopy()/30);
@@ -812,26 +827,36 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 	Ogre::Vector3 oldCameraPos = camera->getPosition();
 	if (keyboard_->isKeyDown(OIS::KC_W)) {
-		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-10), helicopter_->GetRight());
+		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-5), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, upRotation);
+
+		camera->rotate(helicopter_->GetRight(), Ogre::Degree(-5));
+		if (isInThirdPerson)
+			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
 	if (keyboard_->isKeyDown(OIS::KC_S)) {
-		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(10), helicopter_->GetRight());
+		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(5), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, downRotation);
+
+		camera->rotate(helicopter_->GetRight(), Ogre::Degree(5));
+		if (isInThirdPerson)
+			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
 	if (keyboard_->isKeyDown(OIS::KC_A)) {
-		Ogre::Quaternion leftRotation = Ogre::Quaternion(Ogre::Degree(10), helicopter_->GetUp());
+		Ogre::Quaternion leftRotation = Ogre::Quaternion(Ogre::Degree(5), helicopter_->GetUp());
 		AnimationServices::RotateEntity(helicopter_, leftRotation);
-		//camera->setPosition(helicopter_->position);
-		//camera->rotate(helicopter_->GetUp(), Ogre::Degree(10));
-		//camera->setPosition(oldCameraPos);
+
+		camera->rotate(helicopter_->GetUp(), Ogre::Degree(5));
+		if (isInThirdPerson)
+			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
+		
 	}
 	if (keyboard_->isKeyDown(OIS::KC_D)) {
-		Ogre::Quaternion rightRotation = Ogre::Quaternion(Ogre::Degree(-10), helicopter_->GetUp());
+		Ogre::Quaternion rightRotation = Ogre::Quaternion(Ogre::Degree(-5), helicopter_->GetUp());
 		AnimationServices::RotateEntity(helicopter_, rightRotation);
-		//camera->setPosition(helicopter_->position);
-		//camera->rotate(helicopter_->GetUp(), Ogre::Degree(-10));
-		//camera->setPosition(oldCameraPos);
+		camera->rotate(helicopter_->GetUp(), Ogre::Degree(-5));
+		if (isInThirdPerson)
+			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
 	}
 
 	// TODO: Eventually make this loop through all GameEntities and call this method.
@@ -870,179 +895,24 @@ void OgreApplication::InitializeAssets(void)
 {
 	#pragma region helicopter
 	helicopter_ = new HelicopterModel();
-	Ogre::SceneNode** newHelicopter = new Ogre::SceneNode*[6];
+	Ogre::SceneNode** newHelicopter = new Ogre::SceneNode*[7];
 
 	CreateCylinder("Cylinder", 1, "ShinyCylinderTextureMaterial");
 	CreateCube("Cube", "ShinyTextureMaterial");
 	CreateSquare("Square", "EarthTextureMaterial");
     // Create the parts
     newHelicopter[0] = CreateEntity("CylinderInstance1", "Cylinder", "ShinyCylinderTextureMaterial");
-	newHelicopter[1] = CreateEntity("MainRotorblade", "Cylinder", "ShinyCylinderTextureMaterial");
-	newHelicopter[2] = CreateEntity("BodyTop", "Cube", "ShinyTextureMaterial");
-	newHelicopter[3] = CreateEntity("BodyBottom", "Cube", "ShinyTextureMaterial");
-	newHelicopter[4] = CreateEntity("TailBody", "Cylinder", "ShinyCylinderTextureMaterial");
-	newHelicopter[5] = CreateEntity("TailRotorblade", "Cylinder", "ShinyCylinderTextureMaterial");
+	newHelicopter[1] = CreateEntity("MainRotorblade", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
+	newHelicopter[2] = CreateEntity("BodyTop", "Cube", "ShinyTextureMaterial", newHelicopter[0]);
+	newHelicopter[3] = CreateEntity("BodyBottom", "Cube", "ShinyTextureMaterial", newHelicopter[0]);
+	newHelicopter[4] = CreateEntity("TailBody", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
+	newHelicopter[5] = CreateEntity("TailRotorblade", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
+
+	//newHelicopter[6] = newHelicopter[0]->createChildSceneNode(camera_thirdperson_offset);
+	newHelicopter[6] = newHelicopter[0]->createChildSceneNode("CameraPlaceholder", camera_thirdperson_offset);
 
 	helicopter_->SetParts(newHelicopter);
 	helicopter_->initializeHelicopter_OgreSceneGraph();
 	#pragma endregion
-
-	#pragma region terrain
-	//floor_ = CreateEntity("FloorInstance", "Square", "EarthTextureMaterial");
-	//floor_->setPosition(Ogre::Vector3(0, -200, 0));
-	//floor_->scale(Ogre::Vector3(1000, 0, 1000));
-	#pragma endregion
 }
-
-void OgreApplication::createScene()
-{
-	Ogre::SceneManager* mSceneMgr = ogre_root_->getSceneManager("MySceneManager");
-
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2));
- 
-	Ogre::Vector3 lightdir(0.55, -0.3, 0.75);
-	lightdir.normalise();
- 
-	Ogre::Light* light = mSceneMgr->createLight("TestLight");
-	light->setType(Ogre::Light::LT_DIRECTIONAL);
-	light->setDirection(lightdir);
-	light->setDiffuseColour(Ogre::ColourValue::White);
-	light->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
-
-	mTerrainGlobals = OGRE_NEW Ogre::TerrainGlobalOptions();
-
-	mTerrainGroup = OGRE_NEW Ogre::TerrainGroup(
-	  mSceneMgr, 
-	  Ogre::Terrain::ALIGN_X_Z, 
-	  513, 12000.0);
-	mTerrainGroup->setFilenameConvention(Ogre::String("terrain"), Ogre::String("dat"));
-	mTerrainGroup->setOrigin(Ogre::Vector3::ZERO);
-
-	configureTerrainDefaults(light);
-
-	for (long x = 0; x <= 0; ++x)
-	  for (long y = 0; y <= 0; ++y)
-		defineTerrain(x, y);
- 
-	mTerrainGroup->loadAllTerrains(true);
-
-	if (mTerrainsImported)
-	{
-	  Ogre::TerrainGroup::TerrainIterator ti = mTerrainGroup->getTerrainIterator();
- 
-	  while (ti.hasMoreElements())
-	  {
-		Ogre::Terrain* t = ti.getNext()->instance;
-		initBlendMaps(t);
-	  }
-	}
-
-	mTerrainGroup->freeTemporaryResources();
-}
-
-void OgreApplication::configureTerrainDefaults(Ogre::Light* light)
-{
-	Ogre::SceneManager* mSceneMgr = ogre_root_->getSceneManager("MySceneManager");
-
-	mTerrainGlobals->setMaxPixelError(8);
-	mTerrainGlobals->setCompositeMapDistance(3000);
-
-	mTerrainGlobals->setLightMapDirection(light->getDerivedDirection());
-	mTerrainGlobals->setCompositeMapAmbient(mSceneMgr->getAmbientLight());
-	mTerrainGlobals->setCompositeMapDiffuse(light->getDiffuseColour());
-
-	Ogre::Terrain::ImportData& importData = mTerrainGroup->getDefaultImportSettings();
-	importData.terrainSize = 513;
-	importData.worldSize = 12000.0;
-	importData.inputScale = 600;
-	importData.minBatchSize = 33;
-	importData.maxBatchSize = 65;
-
-	importData.layerList.resize(3);
-
-	importData.layerList[0].worldSize = 100;
-	importData.layerList[0].textureNames.push_back(
-	  "dirt_grayrocky_diffusespecular.dds");
-	importData.layerList[0].textureNames.push_back(
-	  "dirt_grayrocky_normalheight.dds");
-	importData.layerList[1].worldSize = 30;
-	importData.layerList[1].textureNames.push_back(
-	  "grass_green-01_diffusespecular.dds");
-	importData.layerList[1].textureNames.push_back(
-	  "grass_green-01_normalheight.dds");
-	importData.layerList[2].worldSize = 200;
-	importData.layerList[2].textureNames.push_back(
-	  "growth_weirdfungus-03_diffusespecular.dds");
-	importData.layerList[2].textureNames.push_back(
-	  "growth_weirdfungus-03_normalheight.dds");
-}
-
-void OgreApplication::defineTerrain(long x, long y)
-{
-	Ogre::String filename = mTerrainGroup->generateFilename(x, y);
-
-	bool exists =
-	Ogre::ResourceGroupManager::getSingleton().resourceExists(
-		mTerrainGroup->getResourceGroup(),
-		filename);
-
-	if (exists)
-	  mTerrainGroup->defineTerrain(x, y);
-	else
-	{
-	  Ogre::Image img;
-	  getTerrainImage(x % 2 != 0, y % 2 != 0, img);
-	  mTerrainGroup->defineTerrain(x, y, &img);
- 
-	  mTerrainsImported = true;
-	}
-}
-
-void OgreApplication::getTerrainImage(bool flipX, bool flipY, Ogre::Image& img)
-{
-	img.load("earth.jpg", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
- 
-	if (flipX)
-	  img.flipAroundY();
-	if (flipY)
-	  img.flipAroundX();
-}
-
-void OgreApplication::initBlendMaps(Ogre::Terrain* terrain)
-{
-	Ogre::Real minHeight0 = 70;
-	Ogre::Real fadeDist0 = 40;
-	Ogre::Real minHeight1 = 70;
-	Ogre::Real fadeDist1 = 15;
- 
-	Ogre::TerrainLayerBlendMap* blendMap0 = terrain->getLayerBlendMap(1);
-	Ogre::TerrainLayerBlendMap* blendMap1 = terrain->getLayerBlendMap(2);
- 
-	float* pBlend0 = blendMap0->getBlendPointer();
-	float* pBlend1 = blendMap1->getBlendPointer();
- 
-	for (Ogre::uint16 y = 0; y < terrain->getLayerBlendMapSize(); ++y)
-	{
-	  for (Ogre::uint16 x = 0; x < terrain->getLayerBlendMapSize(); ++x)
-	  {
-		Ogre::Real tx, ty;
- 
-		blendMap0->convertImageToTerrainSpace(x, y, &tx, &ty);
-		Ogre::Real height = terrain->getHeightAtTerrainPosition(tx, ty);
-		Ogre::Real val = (height - minHeight0) / fadeDist0;
-		val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
-		*pBlend0++ = val;
- 
-		val = (height - minHeight1) / fadeDist1;
-		val = Ogre::Math::Clamp(val, (Ogre::Real)0, (Ogre::Real)1);
-		*pBlend1++ = val;
-	  }
-	}
- 
-	blendMap0->dirty();
-	blendMap1->dirty();
-	blendMap0->update();
-	blendMap1->update();
-}
-
 } // namespace ogre_application;

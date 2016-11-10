@@ -6,8 +6,10 @@ class HelicopterModel :
 public:
 	HelicopterModel(void);
 	~HelicopterModel(void);
+
 	void HelicopterModel::initializeHelicopter_OgreSceneGraph();
 	void HelicopterModel::setHelicopter(Ogre::SceneNode* inHelicopter_[]);
 	void HelicopterModel::animateHelicopter(int timer);
+	Ogre::Vector3 HelicopterModel::GetThirdPersonCameraPosition(void);
 };
 

@@ -3,6 +3,7 @@
 
 HelicopterModel::HelicopterModel(void)
 {
+	max_speed = 3;
 }
 
 
@@ -35,9 +36,8 @@ void HelicopterModel::initializeHelicopter_OgreSceneGraph()
 	entity_parts[5]->setScale(Ogre::Vector3(0.1, tail_rotorblade_length, 0.1));
 	entity_parts[5]->setPosition(Ogre::Vector3(-1*(tail_length-0.1 + topBody_length/2), -1.5, 0));
 
-	num_of_parts = 6;
-
 	direction = Ogre::Vector3(1, 0, 0);
+	num_of_parts = 7;
 	#pragma endregion 
 }
 
@@ -45,10 +45,9 @@ void HelicopterModel::animateHelicopter(int timer)
 {
 	entity_parts[1]->roll(Ogre::Radian(1));
 	entity_parts[5]->pitch(Ogre::Radian(1));
+}
 
-	/*float zTranslationValue = Ogre::Math::Sin(timer/20)/5;
-	for (int i = 0; i < 6; i++)
-	{
-		helicopter_[i]->translate(Ogre::Vector3(0.0, 0, zTranslationValue));
-	}*/
+Ogre::Vector3 HelicopterModel::GetThirdPersonCameraPosition(void)
+{
+	return entity_parts[6]->_getDerivedPosition();
 }

@@ -47,7 +47,7 @@ namespace COMP3501_project {
             // Load a mesh from an obj file and add it to the available resources
             void LoadModel(const char *filename, const char *mesh_name);
             // Create an entity of an object that we can show on the screen
-            Ogre::SceneNode *CreateEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name);
+            Ogre::SceneNode *CreateEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name, Ogre::SceneNode* parent_node = nullptr);
             // Setup animation for an object
             void SetupAnimation(Ogre::String object_name);
             // Keep application active
@@ -70,6 +70,9 @@ namespace COMP3501_project {
 			HelicopterModel* helicopter_;
 			// When we move it forward, it's just going to move in the x-z plane, so we only need a 2d vec
 			Ogre::Vector3 helicopter_orientation_;
+
+			Ogre::Vector3 camera_thirdperson_offset;
+			bool isInThirdPerson;
 
             // For animating an object
             Ogre::AnimationState *animation_state_; // Keep state of the animation

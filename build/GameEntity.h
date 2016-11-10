@@ -27,6 +27,7 @@ public:
 
 	// for now, make set/getters later
 	Ogre::Vector3 position;
+	int max_speed;
 protected:
 	Ogre::SceneNode** entity_parts;
 	Ogre::Vector3 currentMovement;
