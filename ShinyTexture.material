@@ -70,3 +70,66 @@ material TerrainMaterial
         } 
     }
 }
+
+material BuildingMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref shiny_texture_shader/vs
+            {
+            }
+
+            fragment_program_ref shiny_texture_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture building.jpg 2d
+			}
+        } 
+    }
+}
+
+material TopMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref shiny_texture_shader/vs
+            {
+            }
+
+            fragment_program_ref shiny_texture_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture top.jpg 2d
+			}
+        } 
+    }
+}
+
+material HelipadMaterial
+{
+    technique
+    {
+        pass
+        {
+            vertex_program_ref shiny_texture_shader/vs
+            {
+            }
+
+            fragment_program_ref shiny_texture_shader/fs
+            {
+            }
+
+			texture_unit {
+				texture helipad.jpg 2d
+			}
+        } 
+    }
+}

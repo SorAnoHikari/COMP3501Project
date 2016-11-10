@@ -60,6 +60,8 @@ namespace COMP3501_project {
 			void OgreApplication::InitializeAssets(void);
 			void OgreApplication::createScene();
 
+			void OgreApplication::LoadTerrain(void);
+
         private:
             // Create root that allows us to access Ogre commands
             std::auto_ptr<Ogre::Root> ogre_root_;

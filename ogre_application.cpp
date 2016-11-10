@@ -915,4 +915,24 @@ void OgreApplication::InitializeAssets(void)
 	helicopter_->initializeHelicopter_OgreSceneGraph();
 	#pragma endregion
 }
+
+void OgreApplication::LoadTerrain(void) {
+	LoadModel("desert.obj", "desert");
+	LoadModel("building.obj", "building");
+	LoadModel("top.obj", "top");
+	LoadModel("helipad.obj", "helipad");
+
+    Ogre::SceneNode *terrain = CreateEntity("terrain", "desert", "TerrainMaterial");
+	Ogre::SceneNode *building = CreateEntity("building", "building", "BuildingMaterial", terrain);
+	Ogre::SceneNode *building_top = CreateEntity("top", "top", "TopMaterial", building);
+	Ogre::SceneNode *helipad = CreateEntity("helipad", "helipad", "HelipadMaterial", building);
+
+	terrain->setScale(11, 11, 11);
+	terrain->setPosition(10, -20, -5);
+
+	building->setInheritScale(false);
+	building->setScale(6, 6, 6);
+	building->translate(0, 0.15, 0);
+}
+
 } // namespace ogre_application;
