@@ -29,6 +29,10 @@
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTexture.material" />
     <None Include="..\ShinyCylinderTexture.material" />
+    <None Include="..\SplineMaterialFp.glsl" />
+    <None Include="..\SplineMaterialGp.glsl" />
+    <None Include="..\SplineMaterialVp.glsl" />
+    <None Include="..\Spline.material" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

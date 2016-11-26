@@ -1,9 +1,14 @@
 #include "HelicopterModel.h"
+#include "AnimationServices.h"
 
 
 HelicopterModel::HelicopterModel(void)
 {
 	max_speed = 3;
+	IsHomingMissileActive = false;
+	num_control_points = 8;
+	control_point_name = "HomingControlPoints";
+	spline_particle_name = "HomingSplineParticles";
 }
 
 
@@ -81,4 +86,30 @@ void HelicopterModel::DeactivateMissile(void)
 bool HelicopterModel::IsMissileActive(void)
 {
 	return missile->isActive;
+}
+
+Ogre::String HelicopterModel::GetControlPointsName(void)
+{
+	return control_point_name;
+}
+
+Ogre::String HelicopterModel::GetSplineParticleName(void)
+{
+	return spline_particle_name;
+}
+
+int HelicopterModel::GetNumberOfControlPoints(void)
+{
+	return num_control_points;
+}
+
+void HelicopterModel::FireHomingMissile(void)
+{
+	
+	missile->position = position;
+	missile->GetParts()[0]->setPosition(position);
+	missile->GetParts()[0]->setVisible(true);
+	missile->SetForward(forwardDirection);
+	missile->SetCurrentMovement(forwardDirection*2);
+	missile->isActive = true;
 }

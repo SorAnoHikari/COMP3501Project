@@ -41,6 +41,10 @@ namespace COMP3501_project {
         {
 
         public:
+			enum ParticleType
+			{
+				HomingSmoke
+			};
             OgreApplication(void);
             // Call Init() before running the main loop
             void Init(void); 
@@ -56,6 +60,8 @@ namespace COMP3501_project {
 			void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name);
 			void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material_name);
 			void OgreApplication::CreateSquare(Ogre::String object_name, Ogre::String material_name);
+			void OgreApplication::CreateParticleGeometry(Ogre::String object_name, int num_particles, Ogre::ColourValue color_value, bool isStoringIDAsRed);
+			Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name);
 
 			void OgreApplication::InitializeAssets(void);
 			void OgreApplication::createScene();
@@ -84,12 +90,16 @@ namespace COMP3501_project {
             bool animating_; // Whether animation is on or off
             bool space_down_; // Whether space key was pressed
 
+			float timer_;
+
 			enum Direction last_dir_;
 
             // Input managers
             OIS::InputManager *input_manager_;
             OIS::Mouse *mouse_;
             OIS::Keyboard *keyboard_;
+
+			GameEntity* OgreApplication::getClosestEnemyForHoming();
 
 			// Terrain related things
 			

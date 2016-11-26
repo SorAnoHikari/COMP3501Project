@@ -19,7 +19,18 @@ public:
 	void HelicopterModel::FireMissile(void);
 	void HelicopterModel::DeactivateMissile(void);
 	bool HelicopterModel::IsMissileActive(void);
+
+	Ogre::String HelicopterModel::GetControlPointsName(void);
+	Ogre::String HelicopterModel::GetSplineParticleName(void);
+	
+	bool IsHomingMissileActive;
+	Ogre::Vector3 *control_points;
+	int HelicopterModel::GetNumberOfControlPoints(void);
+	void HelicopterModel::FireHomingMissile(void);
 private:
 	MissileModel* missile;
+	int num_control_points;
+	Ogre::String control_point_name;
+	Ogre::String spline_particle_name;
 };
 

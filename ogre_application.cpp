@@ -50,6 +50,7 @@ void OgreApplication::Init(void){
     input_manager_ = NULL;
     keyboard_ = NULL;
     mouse_ = NULL;
+	timer_ = 0;
 
 	camera_thirdperson_offset = Ogre::Vector3(-30, 20.5, 0);
 	isInThirdPerson = true;
@@ -617,6 +618,101 @@ void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radi
     }
 }
 
+void OgreApplication::CreateParticleGeometry(Ogre::String object_name, int num_particles, Ogre::ColourValue color_value, bool isStoringIDAsRed){
+
+	try {
+		/* Retrieve scene manager and root scene node */
+        Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+        /* Create the 3D object */
+        Ogre::ManualObject* object = NULL;
+        object = scene_manager->createManualObject(object_name);
+        object->setDynamic(false);
+
+        /* Create point list for the object */
+		object->begin("", Ogre::RenderOperation::OT_POINT_LIST);
+
+		/* Initialize random numbers */
+		std::srand(std::time(0));
+
+		/* Create a set of points which will be the particles */
+		/* This is similar to drawing a sphere: we will sample points on a sphere, but will allow them to also
+		   deviate a bit from the sphere along the normal (change of radius) */
+		float trad = 0.4; // Defines the starting point of the particles
+        float maxspray = 0.5; // This is how much we allow the points to deviate from the sphere
+		float u, v, w, theta, phi, spray; // Work variables
+		for (int i = 0; i < num_particles; i++){
+			
+			// Randomly select three numbers to define a point in spherical coordinates
+			u = ((double) rand() / (RAND_MAX));
+            v = ((double) rand() / (RAND_MAX));
+            w = ((double) rand() / (RAND_MAX));
+
+			// Use u to define the angle theta along one direction of a sphere
+            theta = u * 2.0 * 3.1416;
+			// Use v to define the angle phi along the other direction of the sphere
+			phi = acos(2.0*v - 1.0);
+			// Use we to define how much we can deviate from the surface of the sphere (change of radius)
+            spray = maxspray*pow((float) w, (float) (1.0/3.0)); // Cubic root of w
+
+			// Define the normal and point based on theta, phi and the spray
+            Ogre::Vector3 normal = Ogre::Vector3(spray*cos(theta)*sin(phi), spray*sin(theta)*sin(phi), spray*cos(phi));
+			object->position(normal.x*trad, normal.y*trad, normal.z*trad);
+			object->normal(normal);
+
+			if (isStoringIDAsRed)
+				object->colour(Ogre::ColourValue(((float) i)/((float) num_particles), 0.0, 0.0));
+			else
+				object->colour(color_value); // We can use the color for debug, if needed
+			object->textureCoord(Ogre::Vector2(0.0, 0.0));
+		}
+		
+		/* We finished the object */
+        object->end();
+		
+        /* Convert triangle list to a mesh */
+        object->convertToMesh(object_name);
+    }
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
+Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name){
+
+	try {
+		/* Create one instance of the torus (one entity) */
+		/* The same object can have multiple instances or entities */
+
+		/* Retrieve scene manager and root scene node */
+        Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+		/* Create entity */
+        Ogre::Entity* entity = scene_manager->createEntity(object_name);
+		entity->setMaterialName(material_name);
+		
+		/* Create a scene node for the entity */
+		/* The scene node keeps track of the entity's position */
+        Ogre::SceneNode* scene_node = root_scene_node->createChildSceneNode(entity_name);
+        scene_node->attachObject(entity);
+
+		/* Scale the entity */
+		scene_node->scale(0.5, 0.5, 0.5);
+
+		return scene_node;
+	}
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
 
 void OgreApplication::LoadMaterials(void){
 
@@ -748,6 +844,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
     /* Keep animating if flag is on */
     if (animating_){
+		timer_ += fe.timeSinceLastFrame;
         animation_state_->addTime(fe.timeSinceLastFrame);
 
 		// Helicopter Animation 
@@ -845,6 +942,15 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_Z) && !helicopter_->IsMissileActive()) {
 		helicopter_->FireMissile();
 	}
+	if (keyboard_->isKeyDown(OIS::KC_X) && !helicopter_->IsHomingMissileActive) {
+		GameEntity* closestEnemy = getClosestEnemyForHoming();
+		//helicopter_->FireMissile();
+		scene_manager->destroyManualObject(helicopter_->GetControlPointsName());
+		AnimationServices::CreateControlPoints(helicopter_->GetControlPointsName(), helicopter_->GetNumberOfControlPoints(), "SplineParticleMaterial", 
+			helicopter_->position, closestEnemy->position, helicopter_->control_points, scene_manager);
+		helicopter_->IsHomingMissileActive = true;
+		timer_ = 0;
+	}
 
 	// Animate the helicopter after changing its variables
 	AnimationServices::MoveEntity(helicopter_);
@@ -863,10 +969,42 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 			helicopter_->DeactivateMissile();
 	}
 
+	if (helicopter_->IsHomingMissileActive)
+	{
+		Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName("SplineParticleMaterial"));
+		mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer_);
+
+		if (timer_ > 2)
+		{
+			timer_ = 0;
+			helicopter_->IsHomingMissileActive = false;
+		}
+	}
+
 	// Displace the camera along with the helicopter
 	camera->move(helicopter_->GetCurrentMovement());
 
     return true;
+}
+
+GameEntity* OgreApplication::getClosestEnemyForHoming()
+{
+	Ogre::Vector3 homingPoint = helicopter_->position + helicopter_->GetForward() * 15;
+
+	GameEntity* closestEnemy = enemies_[0];
+	float closestDistance = 99999;
+
+	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
+	{
+		float distanceToPoint = homingPoint.distance(enemies_[i]->GetParts()[0]->getPosition());
+		if (distanceToPoint < closestDistance)
+		{
+			closestDistance = distanceToPoint;
+			closestEnemy = enemies_[i];
+		}
+	}
+
+	return closestEnemy;
 }
 
 
@@ -946,9 +1084,11 @@ void OgreApplication::InitializeAssets(void)
 		enemies_[i]->SetRadius(7);
 		enemies_[i]->SetNumOfParts(1);
 		enemies_[i]->SetParts(enemyParts);
-		
 	}
 	#pragma endregion
+
+	CreateParticleGeometry("SmokeParticles", 20000, Ogre::ColourValue(150, 0, 0), true);
+	CreateParticleEntity(helicopter_->GetSplineParticleName(), "SmokeParticles", "SplineParticleMaterial");
 }
 
 void OgreApplication::LoadTerrain(void) {

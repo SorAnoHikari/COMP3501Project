@@ -276,6 +276,10 @@
     <ClInclude Include="HelicopterModel.h" />
     <ClInclude Include="MissileModel.h" />
     <None Include="..\ShinyCylinderTexture.material" />
+    <None Include="..\Spline.material" />
+    <None Include="..\SplineMaterialFp.glsl" />
+    <None Include="..\SplineMaterialGp.glsl" />
+    <None Include="..\SplineMaterialVp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialFp.glsl" />
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTexture.material" />
