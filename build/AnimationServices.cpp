@@ -1,6 +1,6 @@
 #include "AnimationServices.h"
 #include "GameEntity.h"
-#include "../ogre_application.h"
+#include "ogre_application.h"
 
 
 AnimationServices::AnimationServices(void)
@@ -71,7 +71,7 @@ void AnimationServices::CreateControlPoints(Ogre::String control_points_name, in
 				control_point[i] = control_point[i - 1];
 			} else if (i % 4 == 1){
 				// Constrain the second point of the curve
-				// q1 = 2*p3 ÅEp2
+				// q1 = 2*p3 ¬ÅEp2
 				// p3 is at position -1 and we add another -1 since we are at i%4 == 1 (not i%4 == 0)
 				// p2 is at position -2 and we add another -1 since we are at i%4 == 1 (not i%4 == 0)
 				control_point[i] = 2.0*control_point[i -2] - control_point[i - 3];
@@ -128,4 +128,9 @@ void AnimationServices::CreateControlPoints(Ogre::String control_points_name, in
     catch(std::exception &e){
         throw std::string("std::Exception: ") + std::string(e.what());
     }	
+}
+
+void AnimationServices::animateMissileExhaust(float timer, Ogre::String material_name) {
+	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(material_name));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer);
 }

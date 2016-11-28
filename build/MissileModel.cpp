@@ -33,4 +33,7 @@ void MissileModel::buildMissileModel(void)
 
 	entity_parts[5]->setScale(1, missile_body.y/8, 1);
 	entity_parts[5]->setPosition(0, -missile_body.y/16, -entity_parts[4]->getPosition().z);
+
+	entity_parts[6]->setScale(1, 0.5, 1);
+	entity_parts[6]->setPosition(0, -top_height*2, 0);
 }
