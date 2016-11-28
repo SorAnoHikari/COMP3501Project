@@ -11,3 +11,26 @@ MissileModel::MissileModel(void)
 MissileModel::~MissileModel(void)
 {
 }
+
+void MissileModel::buildMissileModel(void) 
+{
+	Ogre::Vector3 missile_body = Ogre::Vector3(0.5, 4, 0.5);
+	float top_height = missile_body.y/16;
+
+	entity_parts[0]->setScale(missile_body);
+
+	entity_parts[1]->setScale(missile_body.x*4, top_height, missile_body.z*4);
+	entity_parts[1]->setPosition(0, top_height*3, 0);
+	
+	entity_parts[2]->setScale(1, missile_body.y/8, 1);
+	entity_parts[2]->setPosition(missile_body.x + entity_parts[2]->getScale().x/2, -missile_body.y/16, 0);
+	
+	entity_parts[3]->setScale(1, missile_body.y/8, 1);
+	entity_parts[3]->setPosition(-entity_parts[2]->getPosition().x, -missile_body.y/16, 0);
+
+	entity_parts[4]->setScale(1, missile_body.y/8, 1);
+	entity_parts[4]->setPosition(0, -missile_body.y/16, missile_body.z + entity_parts[4]->getScale().z/2);
+
+	entity_parts[5]->setScale(1, missile_body.y/8, 1);
+	entity_parts[5]->setPosition(0, -missile_body.y/16, -entity_parts[4]->getPosition().z);
+}
