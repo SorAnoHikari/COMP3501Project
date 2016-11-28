@@ -714,6 +714,55 @@ Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name,
     }
 }
 
+//Create a cone mesh without a bottom circle
+void OgreApplication::CreateCone(Ogre::String object_name, Ogre::String material_name) {
+	try {
+		/* Retrieve scene manager and root scene node */
+		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+	
+		/* Create the 3D object */
+		Ogre::ManualObject* object = NULL;
+		object = scene_manager->createManualObject(object_name);
+		object->setDynamic(false);
+
+		/* Create triangle list for the object */
+
+		float const radius = 0.5,
+					sample = 35;
+		int const height = 1.0;
+ 
+		object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
+ 
+		int index = 0;
+		for(float theta = 0; theta <= Ogre::Math::TWO_PI; theta += Ogre::Math::PI / sample) {
+			object->position(Ogre::Vector3(0, height, 0));
+			object->normal(Ogre::Vector3(0, height, 0));
+
+			object->position(radius * cos(theta), -height, radius * sin(theta));
+			object->normal(radius * cos(theta), -height, radius * sin(theta));
+
+			object->position(radius * cos(theta - Ogre::Math::PI / sample), -height, radius * sin(theta - Ogre::Math::PI / sample));
+			object->normal(radius * cos(theta - Ogre::Math::PI / sample), -height, radius * sin(theta - Ogre::Math::PI / sample));
+
+			object->triangle(index, index + 1, index + 2);
+			object->triangle(index + 2, index + 1, index);
+			index += 3;
+		}
+ 
+		object->end();
+		/* Convert triangle list to a mesh */
+		object->convertToMesh(object_name);
+
+	}
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
 void OgreApplication::LoadMaterials(void){
 
     try {
@@ -1058,12 +1107,21 @@ void OgreApplication::InitializeAssets(void)
 	#pragma endregion
 
 	MissileModel* heliMissile = new MissileModel();
-	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[1];
+	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[6];
 
-	//LoadModel("missile.obj", "missile");
-	missileModel[0] = CreateEntity("helicopter_missile", "Cube", "MissileMaterial");
+	CreateCone("Cone", "MissileMaterial");
+	//Create the parts for the missile
+	missileModel[0] = CreateEntity("missile_body", "Cylinder", "MissileMaterial");
+	missileModel[1] = CreateEntity("missile_top", "Cone", "MissileMaterial", missileModel[0]);
+	missileModel[2] = CreateEntity("missile_wing_1", "Cube", "MissileMaterial", missileModel[0]);
+	missileModel[3] = CreateEntity("missile_wing_2", "Cube", "MissileMaterial", missileModel[0]);
+	missileModel[4] = CreateEntity("missile_wing_3", "Cube", "MissileMaterial", missileModel[0]);
+	missileModel[5] = CreateEntity("missile_wing_4", "Cube", "MissileMaterial", missileModel[0]);
+
 	missileModel[0]->setVisible(false);
 	heliMissile->SetParts(missileModel);
+	//build the missile model
+	heliMissile->buildMissileModel();
 	helicopter_->SetMissile(heliMissile);
 
 	#pragma region enemies
@@ -1122,4 +1180,5 @@ void OgreApplication::LoadTerrain(void) {
 	building->setScale(50, 50, 50);
 	building->translate(0, 0.15, 0);
 }
+
 } // namespace ogre_application;

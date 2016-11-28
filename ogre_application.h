@@ -60,6 +60,7 @@ namespace COMP3501_project {
 			void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name);
 			void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material_name);
 			void OgreApplication::CreateSquare(Ogre::String object_name, Ogre::String material_name);
+			void OgreApplication::CreateCone(Ogre::String object_name, Ogre::String material_name);
 			void OgreApplication::CreateParticleGeometry(Ogre::String object_name, int num_particles, Ogre::ColourValue color_value, bool isStoringIDAsRed);
 			Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name);
 
