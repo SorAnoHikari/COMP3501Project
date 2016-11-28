@@ -682,7 +682,7 @@ void OgreApplication::CreateParticleGeometry(Ogre::String object_name, int num_p
     }
 }
 
-Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name){
+Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name, Ogre::SceneNode* parent_node){
 
 	try {
 		/* Create one instance of the torus (one entity) */
@@ -690,7 +690,10 @@ Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name,
 
 		/* Retrieve scene manager and root scene node */
         Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
-        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+		if (parent_node == nullptr)
+        {
+	        parent_node = scene_manager->getRootSceneNode();
+        }
 
 		/* Create entity */
         Ogre::Entity* entity = scene_manager->createEntity(object_name);
@@ -698,7 +701,7 @@ Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name,
 		
 		/* Create a scene node for the entity */
 		/* The scene node keeps track of the entity's position */
-        Ogre::SceneNode* scene_node = root_scene_node->createChildSceneNode(entity_name);
+		Ogre::SceneNode* scene_node = parent_node->createChildSceneNode(entity_name);
         scene_node->attachObject(entity);
 
 		/* Scale the entity */
@@ -755,6 +758,56 @@ void OgreApplication::CreateCone(Ogre::String object_name, Ogre::String material
 		object->convertToMesh(object_name);
 
 	}
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
+void OgreApplication::CreateFireParticle(Ogre::String object_name, int num_particles){
+
+	try {
+		/* Retrieve scene manager and root scene node */
+        Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+        /* Create the 3D object */
+        Ogre::ManualObject* object = NULL;
+        object = scene_manager->createManualObject(object_name);
+        object->setDynamic(false);
+
+        /* Create point list for the object */
+		object->begin("", Ogre::RenderOperation::OT_POINT_LIST);
+
+		/* Initialize random numbers */
+		std::srand(std::time(0));
+
+		/* Create a set of points which will be the particles */
+		float u, v, w, theta; // Work variables
+		for (int i = 0; i < num_particles; i++){
+			
+			// Randomly select three numbers to define a point on the cone
+			u = ((double) rand() / (RAND_MAX));
+            v = ((double) rand() / (RAND_MAX));
+            w = ((double) rand() / (RAND_MAX));
+
+			// Use u and v to define the point on the cone
+			theta = atan(v/u) * Ogre::Math::TWO_PI;
+            Ogre::Vector3 normal = Ogre::Vector3(w*cos(theta), -w + 0.7, w*sin(theta));
+			object->position(normal);
+			object->colour(Ogre::ColourValue(((float) i)/((float) num_particles), 0.0, 1.0 - (((float) i)/((float) num_particles))));
+			object->textureCoord(Ogre::Vector2(0.0, 0.0));
+			object->normal(normal);
+		}
+
+		/* We finished the object */
+        object->end();
+		
+        /* Convert triangle list to a mesh */
+        object->convertToMesh(object_name);
+    }
     catch (Ogre::Exception &e){
         throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
     }
@@ -898,6 +951,8 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 
 		// Helicopter Animation 
 		helicopter_->animateHelicopter(fe.timeSinceLastFrame);
+
+		AnimationServices::animateMissileExhaust(timer_, "MissileExhaustMaterial");
     }
 
     /* Capture input */
@@ -1106,10 +1161,12 @@ void OgreApplication::InitializeAssets(void)
 	helicopter_->initializeHelicopter_OgreSceneGraph();
 	#pragma endregion
 
+	#pragma region missile
 	MissileModel* heliMissile = new MissileModel();
-	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[6];
+	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[7];
 
 	CreateCone("Cone", "MissileMaterial");
+	CreateFireParticle("missile_exhaust", 20000);
 	//Create the parts for the missile
 	missileModel[0] = CreateEntity("missile_body", "Cylinder", "MissileMaterial");
 	missileModel[1] = CreateEntity("missile_top", "Cone", "MissileMaterial", missileModel[0]);
@@ -1117,12 +1174,14 @@ void OgreApplication::InitializeAssets(void)
 	missileModel[3] = CreateEntity("missile_wing_2", "Cube", "MissileMaterial", missileModel[0]);
 	missileModel[4] = CreateEntity("missile_wing_3", "Cube", "MissileMaterial", missileModel[0]);
 	missileModel[5] = CreateEntity("missile_wing_4", "Cube", "MissileMaterial", missileModel[0]);
+	missileModel[6] = CreateParticleEntity("missile_exhaust", "missile_exhaust", "MissileExhaustMaterial", missileModel[0]);
 
 	missileModel[0]->setVisible(false);
 	heliMissile->SetParts(missileModel);
 	//build the missile model
 	heliMissile->buildMissileModel();
 	helicopter_->SetMissile(heliMissile);
+	#pragma endregion
 
 	#pragma region enemies
 	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
