@@ -10,7 +10,7 @@ uniform mat4 world_mat;
 uniform mat4 view_mat;
 uniform vec3 up_vec;
 uniform float timer;
-uniform vec4 control_point[12];
+uniform vec4 control_point[8];
 
 // Attributes forwarded to the geometry shader
 out float particle_id;
@@ -37,7 +37,7 @@ void main()
     
 	int wsec = int(floor(circtime))*4; // Picks which set of control points are used    
 	// used to stop the animation when it reaches the floor
-	if (wsec < 9) {
+	if (wsec > 0) {
 		// Change position of the particle based on a spline
 		vec3 position = vertex;
 		float t = circtime - floor(circtime); // Fractional part, 0-1

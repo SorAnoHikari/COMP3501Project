@@ -702,7 +702,7 @@ Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name,
         scene_node->attachObject(entity);
 
 		/* Scale the entity */
-		scene_node->scale(0.5, 0.5, 0.5);
+		scene_node->scale(2, 2, 2);
 
 		return scene_node;
 	}

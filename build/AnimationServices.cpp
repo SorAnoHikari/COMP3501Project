@@ -108,6 +108,15 @@ void AnimationServices::CreateControlPoints(Ogre::String control_points_name, in
 
 		/* Also create a mesh out of the control points, so that we can render them, if needed */
         Ogre::ManualObject* object = NULL;
+		try {
+			object = scene_manager->getManualObject(control_points_name);
+			scene_manager->destroyManualObject(object);
+			object = NULL;
+		}
+		catch (std::exception e)
+		{
+			
+		}
         object = scene_manager->createManualObject(control_points_name);
         object->setDynamic(false);
 		object->begin("", Ogre::RenderOperation::OT_POINT_LIST);
