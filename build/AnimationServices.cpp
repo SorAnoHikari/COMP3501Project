@@ -1,6 +1,6 @@
 #include "AnimationServices.h"
 #include "GameEntity.h"
-#include "../ogre_application.h"
+#include "ogre_application.h"
 
 
 AnimationServices::AnimationServices(void)
@@ -33,7 +33,7 @@ void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotati
  */
 GameEntity* AnimationServices::DetectMissileCollision(MissileModel* missile, GameEntity** objects)
 {
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		if (missile->position.distance(objects[i]->position) <= missile->GetRadius() + objects[i]->GetRadius()) {
 			return objects[i];
@@ -137,4 +137,9 @@ void AnimationServices::CreateControlPoints(Ogre::String control_points_name, in
     catch(std::exception &e){
         throw std::string("std::Exception: ") + std::string(e.what());
     }	
+}
+
+void AnimationServices::animateMissileExhaust(float timer, Ogre::String material_name) {
+	Ogre::MaterialPtr mat = static_cast<Ogre::MaterialPtr>(Ogre::MaterialManager::getSingleton().getByName(material_name));
+	mat->getBestTechnique()->getPass(0)->getVertexProgramParameters()->setNamedConstant("timer", timer);
 }

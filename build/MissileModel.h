@@ -7,7 +7,8 @@ public:
 	MissileModel(void);
 	~MissileModel(void);
 
+	void buildMissileModel();
+
 	bool isActive;
 private:
 };
-
