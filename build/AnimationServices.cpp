@@ -33,7 +33,7 @@ void AnimationServices::RotateEntity(GameEntity* entity, Ogre::Quaternion rotati
  */
 GameEntity* AnimationServices::DetectMissileCollision(MissileModel* missile, GameEntity** objects)
 {
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		if (missile->position.distance(objects[i]->position) <= missile->GetRadius() + objects[i]->GetRadius()) {
 			return objects[i];
