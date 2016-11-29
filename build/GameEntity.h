@@ -34,6 +34,8 @@ public:
 	// for now, make set/getters later
 	Ogre::Vector3 position;
 	int max_speed;
+	int time_since_direction_change;
+	bool isMovable;
 	
 protected:
 	Ogre::SceneNode** entity_parts;

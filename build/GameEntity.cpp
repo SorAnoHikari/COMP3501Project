@@ -9,6 +9,8 @@ GameEntity::GameEntity(void)
 	position = Ogre::Vector3(0, 0, 0);
 	currentMovement = Ogre::Vector3(0, 0, 0);
 	num_of_parts = 0;
+	time_since_direction_change = 0;
+	isMovable = true;
 }
 
 GameEntity::~GameEntity(void)

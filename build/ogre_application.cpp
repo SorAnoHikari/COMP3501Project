@@ -1,7 +1,7 @@
 #include "ogre_application.h"
-#include "bin/path_config.h"
-#include "build/AnimationServices.h"
-#include "build/TurretModel.h"
+#include "path_config.h"
+#include "AnimationServices.h"
+#include "TurretModel.h"
 
 namespace COMP3501_project {
 
@@ -56,7 +56,7 @@ void OgreApplication::Init(void){
 	camera_thirdperson_offset = Ogre::Vector3(-30, 20.5, 0);
 	isInThirdPerson = true;
 
-	NUMBER_OF_ENEMIES = 10;
+	NUMBER_OF_ENEMIES = 20;
 	enemies_ = new GameEntity*[NUMBER_OF_ENEMIES];
 
     /* Run all initialization steps */
@@ -1170,6 +1170,29 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		}
 	}
 
+	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
+	{
+		if (enemies_[i]->isMovable) {
+			if (enemies_[i]->position.distance(helicopter_->position) < 150)
+			{
+				enemies_[i]->SetCurrentMovement((helicopter_->position - enemies_[i]->position).normalisedCopy());
+			}
+			else
+			{
+				if (enemies_[i]->time_since_direction_change == 0)
+				{
+					enemies_[i]->SetCurrentMovement(enemies_[i]->GetCurrentMovement() + (rand() % 1 - 1) * enemies_[i]->GetForward().normalisedCopy()/30);
+					Ogre::Quaternion rotation = Ogre::Quaternion(Ogre::Degree(rand() % 90 - 90), enemies_[i]->GetUp());
+					AnimationServices::RotateEntity(enemies_[i], rotation);
+				}
+				enemies_[i]->time_since_direction_change++;
+				if (enemies_[i]->time_since_direction_change > 10)
+					enemies_[i]->time_since_direction_change = 0;
+			}
+			AnimationServices::MoveEntity(enemies_[i]);
+		}
+	}
+
 	// Displace the camera along with the helicopter
 	camera->move(helicopter_->GetCurrentMovement());
 
@@ -1279,6 +1302,7 @@ void OgreApplication::InitializeAssets(void)
 	turret->buildTurretModel(Ogre::Vector3(-120, 90, -30));
 	//Put the turret to the end of the array for now 
 	enemies_[NUMBER_OF_ENEMIES-1] = turret;
+	enemies_[NUMBER_OF_ENEMIES-1]->isMovable = false;
 	#pragma endregion
 
 	#pragma region enemies

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -14,15 +11,20 @@
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="HelicopterModel.cpp" />
     <ClCompile Include="MissileModel.cpp" />
+    <ClCompile Include="ogre_application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TurretModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ogre_application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationServices.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="HelicopterModel.h" />
     <ClInclude Include="MissileModel.h" />
+    <ClInclude Include="ogre_application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TurretModel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\Tony\Desktop\Univ Docs\COMP 3501\3501 Project\COMP3501Project\ShinyTextureMaterialVp.glsl" />

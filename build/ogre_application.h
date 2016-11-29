@@ -14,8 +14,8 @@
 #include "OGRE/OgreEntity.h"
 #include "OIS/OIS.h"
 #include "model_loader.h"
-#include "build/GameEntity.h"
-#include "build/HelicopterModel.h"
+#include "GameEntity.h"
+#include "HelicopterModel.h"
 
 namespace COMP3501_project {
 
