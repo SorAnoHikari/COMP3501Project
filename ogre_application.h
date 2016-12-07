@@ -61,6 +61,8 @@ namespace COMP3501_project {
 			void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material_name);
 			void OgreApplication::CreateSquare(Ogre::String object_name, Ogre::String material_name);
 			void OgreApplication::CreateCone(Ogre::String object_name, Ogre::String material_name);
+			// Create geometry of a sphere and add it to the available resources
+            void OgreApplication::CreateHemisphere(Ogre::String object_name, float radius = 0.6, int num_samples_theta = 90, int num_samples_phi = 45);
 			void OgreApplication::CreateFireParticle(Ogre::String object_name, int num_particles); // Create particles
 			void OgreApplication::CreateParticleGeometry(Ogre::String object_name, int num_particles, Ogre::ColourValue color_value, bool isStoringIDAsRed);
 			Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name, Ogre::String object_name, Ogre::String material_name, Ogre::SceneNode* parent_node = nullptr);
@@ -125,6 +127,8 @@ namespace COMP3501_project {
             void InitEvents(void);
             void InitOIS(void);
             void LoadMaterials(void);
+			void InitMesh(void);
+			
 
             /* Methods to handle events */
             bool frameRenderingQueued(const Ogre::FrameEvent& fe);

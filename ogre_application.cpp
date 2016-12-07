@@ -1,6 +1,8 @@
 #include "ogre_application.h"
 #include "bin/path_config.h"
-#include "build/AnimationServices.h"
+#include "AnimationServices.h"
+#include "build/TurretModel.h"
+#include "build/TankModel.h"
 
 namespace COMP3501_project {
 
@@ -55,7 +57,7 @@ void OgreApplication::Init(void){
 	camera_thirdperson_offset = Ogre::Vector3(-30, 20.5, 0);
 	isInThirdPerson = true;
 
-	NUMBER_OF_ENEMIES = 30;
+	NUMBER_OF_ENEMIES = 20;
 	enemies_ = new GameEntity*[NUMBER_OF_ENEMIES];
 
     /* Run all initialization steps */
@@ -324,7 +326,6 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
         /* Create triangle list for the object */
         object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
-		#pragma region Vertices and mesh positions
 		/* Vertices of a cube */
 		Ogre::Vector3 v0(-0.5, -0.5,  0.5);
 		Ogre::Vector3 v1( 0.5, -0.5,  0.5);
@@ -345,8 +346,13 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
 
 		/* Cube's color */
 		Ogre::ColourValue clr0(0.0, 0.0, 1.0);
-		Ogre::ColourValue clr1(0.0, 0.0, 0.9);
-		Ogre::ColourValue clr2(0.0, 0.0, 0.8);
+		Ogre::ColourValue clr1(1.0, 0.0, 1.0);
+		Ogre::ColourValue clr2(1.0, 1.0, 1.0);
+		Ogre::ColourValue clr3(0.0, 1.0, 0.0);
+		Ogre::ColourValue clr4(0.0, 0.0, 1.0);
+		Ogre::ColourValue clr5(1.0, 0.0, 0.0);
+		Ogre::ColourValue clr6(1.0, 1.0, 0.0);
+		Ogre::ColourValue clr7(0.0, 1.0, 0.0);
 		
 		/* This construction only partially uses shared vertices, so that we can assign appropriate vertex normals
 		   to each face */
@@ -358,18 +364,18 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
 
 		object->position(v1);
 		object->normal(n0);
-		object->textureCoord(1, 1);
-		object->colour(clr0);
+		object->textureCoord(1, 0);
+		object->colour(clr1);
 
 		object->position(v2);
 		object->normal(n0);
 		object->textureCoord(1, 1);
-		object->colour(clr0);
+		object->colour(clr2);
 
 		object->position(v3);
 		object->normal(n0);
 		object->textureCoord(0, 1);
-		object->colour(clr0);
+		object->colour(clr3);
 		
 		object->position(v1);
 		object->normal(n1);
@@ -379,42 +385,42 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
 		object->position(v5);
 		object->normal(n1);
 		object->textureCoord(1, 0);
-		object->colour(clr1);
+		object->colour(clr5);
 
 		object->position(v6);
 		object->normal(n1);
 		object->textureCoord(1, 1);
-		object->colour(clr1);
+		object->colour(clr6);
 
 		object->position(v2);
 		object->normal(n1);
 		object->textureCoord(0, 1);
-		object->colour(clr1);
+		object->colour(clr2);
 
 		object->position(v5);
 		object->normal(n2);
 		object->textureCoord(0, 0);
-		object->colour(clr2);
+		object->colour(clr5);
 
 		object->position(v4);
 		object->normal(n2);
 		object->textureCoord(1, 0);
-		object->colour(clr2);
+		object->colour(clr4);
 		
 		object->position(v7);
 		object->normal(n2);
 		object->textureCoord(1, 1);
-		object->colour(clr2);
+		object->colour(clr7);
 
 		object->position(v6);
 		object->normal(n2);
 		object->textureCoord(0, 1);
-		object->colour(clr2);
+		object->colour(clr6);
 
 		object->position(v4);
 		object->normal(n3);
 		object->textureCoord(0, 0);
-		object->colour(clr0);
+		object->colour(clr4);
 
 		object->position(v0);
 		object->normal(n3);
@@ -424,54 +430,52 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
 		object->position(v3);
 		object->normal(n3);
 		object->textureCoord(1, 1);
-		object->colour(clr0);
+		object->colour(clr3);
 
 		object->position(v7);
 		object->normal(n3);
 		object->textureCoord(0, 1);
-		object->colour(clr0);
+		object->colour(clr7);
 
 		object->position(v3);
 		object->normal(n4);
 		object->textureCoord(0, 0);
-		object->colour(clr1);
+		object->colour(clr3);
 
 		object->position(v2);
 		object->normal(n4);
 		object->textureCoord(1, 0);
-		object->colour(clr1);
+		object->colour(clr2);
 
 		object->position(v6);
 		object->normal(n4);
 		object->textureCoord(1, 1);
-		object->colour(clr1);
+		object->colour(clr6);
 
 		object->position(v7);
 		object->normal(n4);
 		object->textureCoord(0, 1);
-		object->colour(clr1);
+		object->colour(clr7);
 
 		object->position(v1);
 		object->normal(n5);
 		object->textureCoord(0, 0);
-		object->colour(clr2);
+		object->colour(clr1);
 
 		object->position(v0);
 		object->normal(n5);
 		object->textureCoord(1, 0);
-		object->colour(clr2);
+		object->colour(clr0);
 
 		object->position(v4);
 		object->normal(n5);
 		object->textureCoord(1, 1);
-		object->colour(clr2);
+		object->colour(clr4);
 
 		object->position(v5);
 		object->normal(n5);
 		object->textureCoord(0, 1);
-		object->colour(clr2);
-
-		#pragma endregion
+		object->colour(clr5);
 
 		for (int i = 0; i < 6; i++){
 			object->triangle(i*4 + 0, i*4 + 1, i*4 + 3);
@@ -493,124 +497,91 @@ void OgreApplication::CreateCube(Ogre::String object_name, Ogre::String material
     }
 }
 
-void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name)
-{
-	try
-	{
-		const int num_loop_samples = 20;
+void OgreApplication::CreateCylinder(Ogre::String object_name, float circle_radius, Ogre::String material_name) {
+	try {
 		/* Retrieve scene manager and root scene node */
 		Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
 		Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
-
+	
 		/* Create the 3D object */
-        Ogre::ManualObject* object = NULL;
-        
-		Ogre::Degree theta = (Ogre::Degree)0;
-		Ogre::Degree alpha = (Ogre::Degree)360/num_loop_samples;
-		float cylinder_height = 1;
+		Ogre::ManualObject* object = NULL;
+		object = scene_manager->createManualObject(object_name);
+		object->setDynamic(false);
 
-		Ogre::Vector3 bottom_circle_center, top_circle_center;
-		Ogre::Vector3 bottom_circle[num_loop_samples], top_circle[num_loop_samples];
+		/* Create triangle list for the object */
+		float const sample = 35;
+		int const height = 1;
 
-		Ogre::Vector2 texture_coord;
-
-		bottom_circle_center.x = 0;
-		bottom_circle_center.y = -cylinder_height/2;
-		bottom_circle_center.z = 0;
-
-		top_circle_center.x = 0;
-		top_circle_center.y = cylinder_height/2;
-		top_circle_center.z = 0;
-
-		for (int i = 0 ; i < num_loop_samples; i++)
-		{
-			theta = theta + alpha;
-			bottom_circle[i].x = Ogre::Math::Sin(theta) * circle_radius;
-			bottom_circle[i].y = bottom_circle_center.y;
-			bottom_circle[i].z = Ogre::Math::Cos(theta) * circle_radius;
-
-			top_circle[i].x = Ogre::Math::Sin(theta) * circle_radius;
-			top_circle[i].y = top_circle_center.y;
-			top_circle[i].z = Ogre::Math::Cos(theta) * circle_radius;
-		}
-
-        object = scene_manager->createManualObject(object_name);
-        object->setDynamic(false);
-
-		/* top circle */
-        object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_FAN);
-		object->colour(Ogre::ColourValue(0.0f, 0.0f, 1.0f));
-		
-		object->position(bottom_circle_center);
-
-		for (int i = 0; i < num_loop_samples; i++)
-		{
-			object->position(top_circle[i]);
-			object->normal(top_circle_center);
-		}
-		object->position(top_circle[0]);
-		object->end();
-
-		/* Curved part of the cylinder */
+		Ogre::Vector3 top_circle_centre = Ogre::Vector3(0, height, 0);
+		Ogre::Vector3 bottom_circle_centre = -top_circle_centre;
+ 
 		object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_LIST);
-		object->colour(Ogre::ColourValue(0.0f, 0.0f, 0.8f));
+ 
+		int index = 0;
+		float t = Ogre::Math::PI/sample;
+		for(float theta = t; theta <= Ogre::Math::TWO_PI + t; theta += t) {
+			//Build the Top Circle of the cylinder
+			object->position(top_circle_centre);
+			object->normal(0, 1, 0);
+			object->textureCoord(0, height);
 
-		int loop_count;
-		for (loop_count = 0; loop_count < num_loop_samples-1; loop_count++)
-		{
-			Ogre::Vector3 norm1 = top_circle[loop_count];
-			norm1.y = 0;
-			Ogre::Vector3 norm2 = top_circle[loop_count + 1];
-			norm2.y = 0;
+			object->position(circle_radius * cos(theta), height, circle_radius * sin(theta)); 
+			object->normal(0, 1, 0);
+			object->textureCoord(theta/Ogre::Math::TWO_PI, height);
 
-			object->position(top_circle[loop_count]);
-			object->normal(norm1);
-			object->position(bottom_circle[loop_count]);
-			object->normal(norm1);
-			object->position(bottom_circle[loop_count+1]);
-			object->normal(norm2);
+			object->position(circle_radius * cos(theta - Ogre::Math::PI / sample), height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->normal(0, 1, 0);
+			object->textureCoord((theta - Ogre::Math::PI/sample)/Ogre::Math::TWO_PI, height);
 
-			object->position(top_circle[loop_count]);
-			object->normal(norm1);
-			object->position(bottom_circle[loop_count+1]);
-			object->normal(norm2);
-			object->position(top_circle[loop_count+1]);
-			object->normal(norm2);
+			object->triangle(index, index + 1, index + 2);
+			object->triangle(index + 2, index + 1, index);
+			index += 3;
 
-			for (int j = 0; j < cylinder_height; j++)
-				texture_coord = Ogre::Vector2(((float)loop_count)/((float)num_loop_samples), 1.0-((float)j)/((float)cylinder_height));
+			//Build the Body of the cylinder
+			object->position(circle_radius * cos(theta), height, circle_radius * sin(theta));
+			object->normal(circle_radius * cos(theta), height, circle_radius * sin(theta));
+			object->textureCoord(theta/Ogre::Math::TWO_PI, height);
 
-			object->textureCoord(texture_coord);
-			
+			object->position(circle_radius * cos(theta - Ogre::Math::PI / sample), height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->normal(circle_radius * cos(theta - Ogre::Math::PI / sample), height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->textureCoord((theta - Ogre::Math::PI/sample)/Ogre::Math::TWO_PI, height);
+
+			object->position(circle_radius * cos(theta - Ogre::Math::PI / sample), -height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->normal(circle_radius * cos(theta - Ogre::Math::PI / sample), -height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->textureCoord((theta - Ogre::Math::PI/sample)/Ogre::Math::TWO_PI, 0);
+
+			object->position(circle_radius * cos(theta), -height, circle_radius * sin(theta));
+			object->normal(circle_radius * cos(theta), -height, circle_radius * sin(theta));
+			object->textureCoord(theta/Ogre::Math::TWO_PI, 0);
+
+			object->quad(index, index + 1, index + 2, index + 3);
+			object->quad(index + 3, index + 2, index + 1, index);
+			index += 4;
+
+			//Build the Bottom Circle of the cylinder
+			object->position(bottom_circle_centre);
+			object->normal(0, -1, 0);
+			object->textureCoord(0, 0);
+
+			object->position(circle_radius * cos(theta), -height, circle_radius * sin(theta));
+			object->normal(0, -1, 0);
+			object->textureCoord(theta/Ogre::Math::TWO_PI, 0);
+
+			object->position(circle_radius * cos(theta - Ogre::Math::PI / sample), -height, circle_radius * sin(theta - Ogre::Math::PI / sample));
+			object->normal(0, -1, 0);
+			object->textureCoord((theta - Ogre::Math::PI/sample)/Ogre::Math::TWO_PI, 0);
+
+			object->triangle(index, index + 1, index + 2);
+			object->triangle(index + 2, index + 1, index);
+			index += 3;
 		}
-
-		object->position(top_circle[loop_count]);
-		object->position(bottom_circle[loop_count]);
-		object->position(bottom_circle[0]);
-
-		object->position(top_circle[loop_count]);
-		object->position(bottom_circle[0]);
-		object->position(top_circle[0]);
-
-		object -> end();
-
-		/* Bottom circle */
-		object->begin(material_name, Ogre::RenderOperation::OT_TRIANGLE_FAN);
-		object->colour(Ogre::ColourValue(0.0f, 0.0f, 1.0f));
-		
-		object->position(top_circle_center);
-
-		for (int i = num_loop_samples-1; i > 0; i--)
-		{
-			object->position(bottom_circle[i]);
-			object->normal(bottom_circle_center);
-		}
-		object->position(bottom_circle[num_loop_samples-1]);
+ 
 		object->end();
-
+		/* Convert triangle list to a mesh */
 		object->convertToMesh(object_name);
+
 	}
-	catch (Ogre::Exception &e){
+    catch (Ogre::Exception &e){
         throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
     }
     catch(std::exception &e){
@@ -705,7 +676,7 @@ Ogre::SceneNode* OgreApplication::CreateParticleEntity(Ogre::String entity_name,
         scene_node->attachObject(entity);
 
 		/* Scale the entity */
-		scene_node->scale(2, 2, 2);
+		scene_node->scale(0.5, 0.5, 0.5);
 
 		return scene_node;
 	}
@@ -802,6 +773,87 @@ void OgreApplication::CreateFireParticle(Ogre::String object_name, int num_parti
 			object->normal(normal);
 		}
 
+		/* We finished the object */
+        object->end();
+		
+        /* Convert triangle list to a mesh */
+        object->convertToMesh(object_name);
+    }
+    catch (Ogre::Exception &e){
+        throw(OgreAppException(std::string("Ogre::Exception: ") + std::string(e.what())));
+    }
+    catch(std::exception &e){
+        throw(OgreAppException(std::string("std::Exception: ") + std::string(e.what())));
+    }
+}
+
+void OgreApplication::CreateHemisphere(Ogre::String object_name, float radius, int num_samples_theta, int num_samples_phi){
+
+    try {
+		/* Create a sphere */
+
+        /* Retrieve scene manager and root scene node */
+        Ogre::SceneManager* scene_manager = ogre_root_->getSceneManager("MySceneManager");
+        Ogre::SceneNode* root_scene_node = scene_manager->getRootSceneNode();
+
+        /* Create the 3D object */
+        Ogre::ManualObject* object = NULL;
+        object = scene_manager->createManualObject(object_name);
+        object->setDynamic(false);
+
+        /* Create triangle list for the object */
+		object->begin("", Ogre::RenderOperation::OT_TRIANGLE_LIST);
+
+		/* Add vertices to the object */
+		float theta, phi; // Angles for parametric equation
+		Ogre::Vector3 vertex_position;
+		Ogre::Vector3 vertex_normal;
+		Ogre::ColourValue vertex_color;
+		Ogre::Vector2 texture_coord;
+		
+				
+		for (int i = 0; i < num_samples_theta; i++){
+			
+			theta = Ogre::Math::PI*i/(num_samples_theta-1); // angle theta
+			
+			for (int j = 0; j < num_samples_phi; j++){
+				
+				phi = Ogre::Math::PI*j/(num_samples_phi-1); // angle phi
+				
+				/* Define position, normal and color of vertex */
+				vertex_normal = Ogre::Vector3(cos(theta)*sin(phi), sin(theta)*sin(phi), -cos(phi));
+				// We need z = -cos(phi) to make sure that the z coordinate runs from -1 to 1 as phi runs from 0 to pi
+				// Otherwise, the normal will be inverted
+				vertex_position = Ogre::Vector3(vertex_normal.x*radius, 
+					                            vertex_normal.y*radius, 
+												vertex_normal.z*radius),
+				/*vertex_color = Ogre::ColourValue(1.0 - ((float) i / (float) num_samples_theta), 
+				                                 (float) i / (float) num_samples_theta, 
+				                                 (float) j / (float) num_samples_phi);*/
+				vertex_color = Ogre::ColourValue(0.0, 0.0, 1.0);
+				texture_coord = Ogre::Vector2(((float)i)/((float)num_samples_theta), 1.0-((float)j)/((float)num_samples_phi));
+								
+				/* Add them to the object */
+				object->position(vertex_position);
+				object->normal(vertex_normal);
+				object->colour(vertex_color); 
+				object->textureCoord(texture_coord);
+			}
+		}
+
+		/* Add triangles to the object */
+		for (int i = 0; i < num_samples_theta; i++){
+			for (int j = 0; j < (num_samples_phi-1); j++){
+				// Two triangles per quad
+				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + j, 
+									i*num_samples_phi + (j + 1),
+									i*num_samples_phi + j);
+				object->triangle(((i + 1) % num_samples_theta)*num_samples_phi + j, 
+									((i + 1) % num_samples_theta)*num_samples_phi + (j + 1), 
+									i*num_samples_phi + (j + 1));
+			}
+		}
+		
 		/* We finished the object */
         object->end();
 		
@@ -953,6 +1005,9 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		helicopter_->animateHelicopter(fe.timeSinceLastFrame);
 
 		AnimationServices::animateMissileExhaust(timer_, "MissileExhaustMaterial");
+
+		//keep rotating for now
+		((TurretModel*)enemies_[NUMBER_OF_ENEMIES-1])->animateTurret();
     }
 
     /* Capture input */
@@ -1085,6 +1140,29 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		}
 	}
 
+	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
+	{
+		if (enemies_[i]->isMovable) {
+			if (enemies_[i]->position.distance(helicopter_->position) < 150)
+			{
+				enemies_[i]->SetCurrentMovement((helicopter_->position - enemies_[i]->position).normalisedCopy());
+			}
+			else
+			{
+				if (enemies_[i]->time_since_direction_change == 0)
+				{
+					enemies_[i]->SetCurrentMovement(enemies_[i]->GetCurrentMovement() + (rand() % 1 - 1) * enemies_[i]->GetForward().normalisedCopy()/30);
+					Ogre::Quaternion rotation = Ogre::Quaternion(Ogre::Degree(rand() % 90 - 90), enemies_[i]->GetUp());
+					AnimationServices::RotateEntity(enemies_[i], rotation);
+				}
+				enemies_[i]->time_since_direction_change++;
+				if (enemies_[i]->time_since_direction_change > 10)
+					enemies_[i]->time_since_direction_change = 0;
+			}
+			AnimationServices::MoveEntity(enemies_[i]);
+		}
+	}
+
 	// Displace the camera along with the helicopter
 	camera->move(helicopter_->GetCurrentMovement());
 
@@ -1135,17 +1213,27 @@ void OgreApplication::windowResized(Ogre::RenderWindow* rw){
     ogre_window_->update();
 }
 
+//Create the meshes that we need
+void OgreApplication::InitMesh(void) {
+	CreateCylinder("Cylinder", 1, "ShinyCylinderTextureMaterial");
+	CreateCube("Cube", "ShinyTextureMaterial");
+	CreateCone("Cone", "MissileMaterial");
+	CreateFireParticle("missile_exhaust", 20000);
+	CreateHemisphere("Hemisphere");
+	CreateParticleGeometry("SmokeParticles", 20000, Ogre::ColourValue(150, 0, 0), true);
+}
+
 /*
  *	Method to load all models
  */
 void OgreApplication::InitializeAssets(void)
 {
+	InitMesh();
+
 	#pragma region helicopter
 	helicopter_ = new HelicopterModel();
 	Ogre::SceneNode** newHelicopter = new Ogre::SceneNode*[7];
 
-	CreateCylinder("Cylinder", 1, "ShinyCylinderTextureMaterial");
-	CreateCube("Cube", "ShinyTextureMaterial");
     // Create the parts
     newHelicopter[0] = CreateEntity("CylinderInstance1", "Cylinder", "ShinyCylinderTextureMaterial");
 	newHelicopter[1] = CreateEntity("MainRotorblade", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
@@ -1165,8 +1253,6 @@ void OgreApplication::InitializeAssets(void)
 	MissileModel* heliMissile = new MissileModel();
 	Ogre::SceneNode** missileModel = new Ogre::SceneNode*[7];
 
-	CreateCone("Cone", "MissileMaterial");
-	CreateFireParticle("missile_exhaust", 20000);
 	//Create the parts for the missile
 	missileModel[0] = CreateEntity("missile_body", "Cylinder", "MissileMaterial");
 	missileModel[1] = CreateEntity("missile_top", "Cone", "MissileMaterial", missileModel[0]);
@@ -1183,8 +1269,34 @@ void OgreApplication::InitializeAssets(void)
 	helicopter_->SetMissile(heliMissile);
 	#pragma endregion
 
+	#pragma region turret
+	TurretModel* turret = new TurretModel();
+	Ogre::SceneNode** turretModel = new Ogre::SceneNode*[2];
+
+	turretModel[0] = CreateEntity("turret_body", "Hemisphere", "TurretMaterial");
+	turretModel[1] = CreateEntity("turret_cannon", "Cylinder", "TurretMaterial", turretModel[0]);
+	turret->SetParts(turretModel);
+	turret->buildTurretModel(Ogre::Vector3(-120, 90, -30));
+	//Put the turret to the end of the array for now 
+	enemies_[NUMBER_OF_ENEMIES-1] = turret;
+	enemies_[NUMBER_OF_ENEMIES-1]->isMovable = false;
+	#pragma endregion
+
+
+	#pragma region tank
+	TankModel* tank = new TankModel();
+	Ogre::SceneNode** tankModel = new Ogre::SceneNode*[3];
+
+	tankModel[0] = CreateEntity("tank_body", "Cube", "TurretMaterial");
+	tankModel[1] = CreateEntity("tank_top", "Cylinder", "TurretMaterial", tankModel[0]);
+	tankModel[2] = CreateEntity("tank_cannon", "Cylinder", "TurretMaterial", tankModel[1]);
+
+	tank->SetParts(tankModel);
+	tank->buildTankModel(Ogre::Vector3(-120, 90, -30));
+	#pragma endregion
+
 	#pragma region enemies
-	for (int i = 0; i < NUMBER_OF_ENEMIES; i++)
+	for (int i = 0; i < NUMBER_OF_ENEMIES-1; i++)
 	{
 		Ogre::String entity_name, prefix("Enemy_");;
 		entity_name = prefix + Ogre::StringConverter::toString(i);
@@ -1204,7 +1316,6 @@ void OgreApplication::InitializeAssets(void)
 	}
 	#pragma endregion
 
-	CreateParticleGeometry("SmokeParticles", 20000, Ogre::ColourValue(150, 0, 0), true);
 	CreateParticleEntity(helicopter_->GetSplineParticleName(), "SmokeParticles", "SplineParticleMaterial");
 }
 
@@ -1223,7 +1334,6 @@ void OgreApplication::LoadTerrain(void) {
 
 	sky->setScale(111, 111, 111);
 	sky->translate(10, -20, -5);
-	//for some reason, the texture is inverted
 	sky->pitch(Ogre::Angle(180));
 
 	floor_->setInheritOrientation(false);
