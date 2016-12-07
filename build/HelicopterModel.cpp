@@ -18,9 +18,9 @@ HelicopterModel::~HelicopterModel(void)
 
 void HelicopterModel::initializeHelicopter_OgreSceneGraph()
 {
-	float rotorblade_length = 20;
+	float rotorblade_length = 10;
 	float topBody_length = 12;
-	float tail_length = 4;
+	float tail_length = 2;
 	float tail_rotorblade_length = 5;
 	#pragma region Scene Graph Transformations
 	/* Using Ogre Scene Graph's methods to transform the parts */
