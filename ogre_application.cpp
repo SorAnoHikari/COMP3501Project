@@ -1068,6 +1068,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_W)) {
 		Ogre::Quaternion upRotation = Ogre::Quaternion(Ogre::Degree(-1), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, upRotation);
+		AnimationServices::RotateEntity(helicopter_->GetMissile(), upRotation);
 
 		camera->rotate(helicopter_->GetRight(), Ogre::Degree(-1));
 		if (isInThirdPerson)
@@ -1076,6 +1077,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_S)) {
 		Ogre::Quaternion downRotation = Ogre::Quaternion(Ogre::Degree(1), helicopter_->GetRight());
 		AnimationServices::RotateEntity(helicopter_, downRotation);
+		AnimationServices::RotateEntity(helicopter_->GetMissile(), downRotation);
 
 		camera->rotate(helicopter_->GetRight(), Ogre::Degree(1));
 		if (isInThirdPerson)
@@ -1084,6 +1086,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_A)) {
 		Ogre::Quaternion leftRotation = Ogre::Quaternion(Ogre::Degree(5), helicopter_->GetUp());
 		AnimationServices::RotateEntity(helicopter_, leftRotation);
+		AnimationServices::RotateEntity(helicopter_->GetMissile(), leftRotation);
 
 		camera->rotate(helicopter_->GetUp(), Ogre::Degree(5));
 		if (isInThirdPerson)
@@ -1093,6 +1096,8 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 	if (keyboard_->isKeyDown(OIS::KC_D)) {
 		Ogre::Quaternion rightRotation = Ogre::Quaternion(Ogre::Degree(-5), helicopter_->GetUp());
 		AnimationServices::RotateEntity(helicopter_, rightRotation);
+		AnimationServices::RotateEntity(helicopter_->GetMissile(), rightRotation);
+
 		camera->rotate(helicopter_->GetUp(), Ogre::Degree(-5));
 		if (isInThirdPerson)
 			camera->setPosition(helicopter_->GetThirdPersonCameraPosition());
@@ -1122,6 +1127,7 @@ bool OgreApplication::frameRenderingQueued(const Ogre::FrameEvent& fe){
 		if (collidedObject != nullptr)
 		{
 			collidedObject->ToggleVisibility(false);
+			std::cout << "collide" << std::endl;
 		}
 		// If the missile is too far away, deactivate it
 		if (helicopter_->GetMissile()->position.distance(helicopter_->position) > 100)
@@ -1232,7 +1238,7 @@ void OgreApplication::InitializeAssets(void)
 
 	#pragma region helicopter
 	helicopter_ = new HelicopterModel();
-	Ogre::SceneNode** newHelicopter = new Ogre::SceneNode*[7];
+	Ogre::SceneNode** newHelicopter = new Ogre::SceneNode*[9];
 
     // Create the parts
     newHelicopter[0] = CreateEntity("CylinderInstance1", "Cylinder", "ShinyCylinderTextureMaterial");
@@ -1241,6 +1247,8 @@ void OgreApplication::InitializeAssets(void)
 	newHelicopter[3] = CreateEntity("BodyBottom", "Cube", "ShinyTextureMaterial", newHelicopter[0]);
 	newHelicopter[4] = CreateEntity("TailBody", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
 	newHelicopter[5] = CreateEntity("TailRotorblade", "Cylinder", "ShinyCylinderTextureMaterial", newHelicopter[0]);
+	newHelicopter[7] = CreateEntity("machine_gun1", "Cylinder", "MissileMaterial", newHelicopter[0]);
+	newHelicopter[8] = CreateEntity("machine_gun2", "Cylinder", "MissileMaterial", newHelicopter[0]);
 
 	//newHelicopter[6] = newHelicopter[0]->createChildSceneNode(camera_thirdperson_offset);
 	newHelicopter[6] = newHelicopter[0]->createChildSceneNode("CameraPlaceholder", camera_thirdperson_offset);
@@ -1292,7 +1300,9 @@ void OgreApplication::InitializeAssets(void)
 	tankModel[2] = CreateEntity("tank_cannon", "Cylinder", "TurretMaterial", tankModel[1]);
 
 	tank->SetParts(tankModel);
-	tank->buildTankModel(Ogre::Vector3(-120, 90, -30));
+	tank->buildTankModel(Ogre::Vector3(-40, -10, -30));
+	enemies_[NUMBER_OF_ENEMIES-2] = tank;
+	enemies_[NUMBER_OF_ENEMIES-2]->isMovable = true;
 	#pragma endregion
 
 	#pragma region enemies
@@ -1337,13 +1347,6 @@ void OgreApplication::LoadTerrain(void) {
 	sky->pitch(Ogre::Angle(180));
 
 	floor_->setInheritOrientation(false);
-
-	/*
-	LoadModel("desert.obj", "desert");
-	floor_ = CreateEntity("terrain", "desert", "TerrainMaterial");
-	floor_->setScale(100, 100, 100);
-	floor_->setPosition(10, -20, -5);
-	*/
 
 	building->setInheritScale(false);
 	building->setScale(50, 50, 50);
