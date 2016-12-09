@@ -11,6 +11,7 @@ TankModel::~TankModel() {
 void TankModel::buildTankModel(Ogre::Vector3 position) {
 	Ogre::Vector3 tank_size = Ogre::Vector3(10, 5, 5);
 	entity_parts[0]->setScale(tank_size);
+	entity_parts[0]->setPosition(position);
 
 	entity_parts[1]->setInheritScale(false);
 	entity_parts[1]->setScale(2, 2, 2);
